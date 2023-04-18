@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4yh1wdhwscn4"]
+
+[ext_resource type="PackedScene" uid="uid://d1yicv28rkhri" path="res://scenes/consumables/consumable.tscn" id="1_tc6vq"]
+[ext_resource type="Texture2D" uid="uid://c2dapmq0fijxb" path="res://assets/food/poop.png" id="2_hn5rc"]
+
+[node name="Poop" instance=ExtResource("1_tc6vq")]
+consumable_name = "poop"
+mass = -20.0
+is_ability = true
+
+[node name="Sprite2D" parent="." index="0"]
+scale = Vector2(1, 1)
+texture = ExtResource("2_hn5rc")

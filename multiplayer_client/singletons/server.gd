@@ -1,0 +1,55 @@
+extends Node
+
+var network = ENetMultiplayerPeer.new()
+var port = 9898
+var host = 'localhost'
+
+var player = preload("res://scenes/hamster/hamster.tscn")
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	connect_to_server()
+	pass # Replace with function body.
+
+
+func connect_to_server():
+	network.create_client(host, port)
+	multiplayer.multiplayer_peer = network
+	
+	multiplayer.connected_to_server.connect(
+		func():
+			print('connected to server ')
+			rpc_id(1, 'add_player', multiplayer.get_unique_id())
+			request_existing_consumables(multiplayer.get_unique_id())
+	)
+	
+	multiplayer.server_disconnected.connect(
+		func():
+			print('disconnected from server')
+			
+	)
+
+
+@rpc("any_peer")
+func add_player(id):
+	if multiplayer.get_unique_id() != id and !get_node("/root/Main/%s" % str(id)):
+		var p = player.instantiate()
+		p.name = str(id)
+		get_node("/root/Main").add_child(p)
+
+func request_existing_consumables(id):
+	rpc_id(1, 'process_existing_consumables', id)
+
+@rpc("any_peer")
+func add_existing_consumables(consumables):
+	print(consumables.size())
+	for num in consumables.size():
+#		con.name = str(con.name).to_lower()
+		Game.instance_consumable(consumables[num])
+#		if con['name'].contains('Poop'):
+			
+	
+
+# server calls
+@rpc("any_peer")
+func process_existing_consumables(id): pass

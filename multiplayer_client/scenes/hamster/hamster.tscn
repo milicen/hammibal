@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://kf3lig7i8fek"]
+
+[ext_resource type="Texture2D" uid="uid://dgxcrfcsmqgjy" path="res://assets/hamsters/camp/default.png" id="1_4mus1"]
+[ext_resource type="Script" path="res://scenes/hamster/hamster.gd" id="1_r7tvw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_owmnh"]
+radius = 67.0075
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p7tli"]
+radius = 28.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_xysxv"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath(".:scale")
+properties/2/spawn = true
+properties/2/sync = true
+
+[node name="Hamster" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_r7tvw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
+texture = ExtResource("1_4mus1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_owmnh")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+zoom = Vector2(0.5, 0.5)
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+position = Vector2(24, 0)
+shape = SubResource("CircleShape2D_p7tli")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_xysxv")
+
+[connection signal="area_entered" from="PickupArea" to="." method="_on_pickup_area_area_entered"]

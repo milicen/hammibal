@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c0ka64wl2bfvb"]
+
+[node name="Main" type="Node"]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/hamster/hamster.tscn")
+spawn_path = NodePath("..")
