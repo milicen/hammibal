@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhx2dyeej1d3v"]
+
+[ext_resource type="PackedScene" uid="uid://d1yicv28rkhri" path="res://scenes/consumables/consumable.tscn" id="1_ekysj"]
+[ext_resource type="Texture2D" uid="uid://dhwo340tos2mn" path="res://assets/food/sunflower seed.png" id="2_av3au"]
+
+[node name="SunSeed" instance=ExtResource("1_ekysj")]
+consumable_name = "sun_seed"
+mass = 0.2
+is_ability = true
+
+[node name="Sprite2D" parent="." index="0"]
+position = Vector2(0, -5)
+texture = ExtResource("2_av3au")

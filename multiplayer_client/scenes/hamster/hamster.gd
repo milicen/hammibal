@@ -62,15 +62,12 @@ func _unhandled_input(event):
 	if event.is_action_pressed("poop_attack"):
 		var direction = Vector2.RIGHT.rotated(rotation) * -Vector2.ONE
 		Game.request_poop_attack(global_position, direction, get_multiplayer_authority())
-		pass
-#		poop_attack.rpc()
-#		poop_attack()
 	
 	if event.is_action_pressed("spit_nut"):
-		pass
-#		spit_nut.rpc()
-#		spit_nut()
+		var direction = Vector2.RIGHT.rotated(rotation)
+		Game.request_spit_nut(global_position, direction, get_multiplayer_authority())
   
+
 func _notification(what):
 	match what:
 		NOTIFICATION_WM_MOUSE_ENTER:

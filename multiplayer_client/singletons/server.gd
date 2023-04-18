@@ -42,12 +42,8 @@ func request_existing_consumables(id):
 
 @rpc("any_peer")
 func add_existing_consumables(consumables):
-	print(consumables.size())
 	for num in consumables.size():
-#		con.name = str(con.name).to_lower()
 		Game.instance_consumable(consumables[num])
-#		if con['name'].contains('Poop'):
-			
 	
 
 # server calls
