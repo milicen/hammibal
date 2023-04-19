@@ -44,7 +44,8 @@ func process_existing_consumables(id):
 			'name': c.name,
 			'position': c.global_position,
 			'rotation': c.rotation,
-			'scale': c.scale
+			'scale': c.scale,
+			'mass': c.mass
 		}
 		arr.append(data)
 	rpc_id(id, 'add_existing_consumables', arr)

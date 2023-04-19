@@ -15,12 +15,9 @@ properties/1/sync = true
 properties/2/path = NodePath(".:scale")
 properties/2/spawn = true
 properties/2/sync = true
-properties/3/path = NodePath(".:rand_rotation")
-properties/3/spawn = false
-properties/3/sync = false
-properties/4/path = NodePath(".:rand_size")
-properties/4/spawn = false
-properties/4/sync = false
+properties/3/path = NodePath(".:mass")
+properties/3/spawn = true
+properties/3/sync = true
 
 [node name="Consumable" type="Area2D" groups=["consumable"]]
 z_index = -1

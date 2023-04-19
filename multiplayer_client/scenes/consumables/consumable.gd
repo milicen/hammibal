@@ -10,8 +10,6 @@ var direction: Vector2
 var is_moving := false
 var velocity := Vector2.ZERO
 var start_pos := Vector2.ZERO
-@export var rand_rotation: float
-@export var rand_size: float
 
 
 @onready var sprite := $Sprite2D
@@ -27,6 +25,8 @@ func _ready():
 		is_moving = true
 	else:
 		set_physics_process(false)
+	
+	print(get_multiplayer_authority())
 
 func _physics_process(delta):
 	if is_moving:
@@ -49,6 +49,7 @@ func init(spitter, start_position: Vector2, direction: Vector2, rand_size: float
 func _on_timer_timeout():
 	is_moving = false
 	spitter = null
+
 
 func despawn():
 	if is_moving:

@@ -35,7 +35,6 @@ func _ready():
 #	syncer.set_multiplayer_authority(str(name).to_int())
 	camera.enabled = is_multiplayer_authority()
 
-
 func _physics_process(delta):
 	if not is_multiplayer_authority(): return
 	
@@ -61,6 +60,7 @@ func _unhandled_input(event):
 	
 	if event.is_action_pressed("poop_attack"):
 		var direction = Vector2.RIGHT.rotated(rotation) * -Vector2.ONE
+		accel = 0.2
 		Game.request_poop_attack(global_position, direction, get_multiplayer_authority())
 	
 	if event.is_action_pressed("spit_nut"):
@@ -75,69 +75,40 @@ func _notification(what):
 		NOTIFICATION_WM_MOUSE_EXIT:
 			controlling = false
 
-#@rpc("call_local","any_peer")
-#func poop_attack() -> void:
-#	if poop_count < 1: return
-#
-#	accel = max_accel
-#	poop_count -= 1
-##	var direction = get_mouse_dir() * -Vector2.ONE
-#	var direction = Vector2.RIGHT.rotated(rotation) * -Vector2.ONE
-#	var poop = instance_poop(direction)
-#	mass -= poop.mass / poop.mass - 0.8
-#	tween_scale()
-#	get_parent().rpc_id(1, 'spawn_pickup', str(name).to_int(), global_position, direction)
-
-#@rpc("call_local")
-#func instance_poop(direction:Vector2) -> Consumable:
-#	var poop:Consumable = poop_scene.instantiate()
-#	poop.init(self, global_position, direction)
-#	get_parent().add_child(poop, true)
-#	return poop
-	
-#@rpc("call_local")
-#func spit_nut() -> void:
-#	if nut_count < 1: return
-	
-#	nut_count -= 1
-#	var direction = get_mouse_dir()
-#	var direction = Vector2.RIGHT.rotated(rotation)
-#	var nut = instance_nut(direction)
-#	mass -= nut.mass
-#	tween_scale()
-	
-#@rpc("call_local")
-#func instance_nut(direction:Vector2) -> Consumable:
-#	var rand = randi() % 2
-#	nut_mod = (nut_mod+1) % 2
-#	var nut
-#	if nut_mod == 0:
-#		nut = sun_seed_scene.instantiate()
-#	else:
-#		nut = pumpkin_seed_scene.instantiate()
-#	nut.init(self, global_position, direction)
-#	get_parent().add_child(nut, true)
-#	return nut
 
 func get_mouse_dir() -> Vector2:
 	if !controlling: return Vector2.ZERO
 	return global_position.direction_to(get_global_mouse_position())
 
 
-#func _on_pickup_area_area_entered(area:Consumable):
-#	if area.spitter == get_multiplayer_authority(): return
-#
-#	if area.consumable_name == 'poop':
-#		mass += mass * area.mass / 100
-#	else:
-#		mass += area.mass
-#
-#	if area.is_in_group('nut'):
-#		nut_count += 1
-#
-#	tween_scale()
-#
-#	area.despawn()
+func _on_pickup_area_area_entered(area:Consumable):
+#	if not is_multiplayer_authority(): return
+	if area.spitter == get_multiplayer_authority(): return
+	if is_multiplayer_authority():
+		print('eat')
+		Game.request_despawn_pickup(area.name, get_multiplayer_authority())
+
+func calculate_mass_eat(consumable):
+	if consumable.consumable_name == 'poop':
+		mass += mass * consumable.mass / 100
+	else:
+		mass += consumable.mass
+
+	if consumable.is_in_group('nut'):
+		nut_count += 1
+
+	tween_scale()
+
+func calculate_mass_release(consumable):
+	print('mass release ', consumable.mass)
+	if consumable.consumable_name == 'poop':
+		mass += mass * consumable.mass / 100
+		poop_count -= 1
+	else:
+		mass -= consumable.mass
+		nut_count += 1
+
+	tween_scale()
 
 func tween_scale():
 	var tween = create_tween().set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)

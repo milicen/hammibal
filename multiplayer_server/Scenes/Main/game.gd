@@ -14,6 +14,10 @@ func receive_poop_attack(position, direction, size, rotation, consumable_name, r
 func receive_spit_nut(position, direction, size, rotation, consumable_name, requester_id):
 	pass
 
+@rpc("any_peer")
+func receive_despawn_pickup(pickup_name, requester_id):
+	pass
+
 # server project calls
 @rpc("any_peer")
 func process_poop_attack(position, direction, requester_id): 
@@ -33,3 +37,26 @@ func process_spit_nut(position, direction, requester_id):
 	var rand_size = randf_range(0.4, 0.6)
 	var rand_rotation = randf_range(0, 2*PI)
 	rpc('receive_spit_nut', position, direction, rand_size, rand_rotation, nut.name, requester_id)
+
+@rpc("any_peer")
+func process_despawn_pickup(pickup_name, requester_id):
+	var pickup = get_node_or_null("/root/Main/%s" % str(pickup_name))
+	if pickup:
+		pickup.call_deferred('queue_free')
+	rpc('receive_despawn_pickup', pickup_name, requester_id)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

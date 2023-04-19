@@ -43,6 +43,7 @@ func request_existing_consumables(id):
 @rpc("any_peer")
 func add_existing_consumables(consumables):
 	for num in consumables.size():
+		print(consumables[num])
 		Game.instance_consumable(consumables[num])
 	
 
