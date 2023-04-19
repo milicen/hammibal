@@ -24,7 +24,8 @@ func _on_PeerConnected(player_id):
 
 func _on_PeerDisconnected(player_id):
 	print('Player %s disconnected' % str(player_id))
-	get_node('/root/Main/%s' % str(player_id)).queue_free()
+	if get_node('/root/Main/%s' % str(player_id)):
+		get_node('/root/Main/%s' % str(player_id)).queue_free()
 	
 	pass
 

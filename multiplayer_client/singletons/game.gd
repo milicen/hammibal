@@ -77,6 +77,19 @@ func receive_despawn_pickup(pickup_name, requester_id):
 	pickup.despawn()
 		
 
+func request_hunt_hamster(hunter, prey):
+	rpc_id(1, 'process_hunt_hamster', hunter, prey)
+
+@rpc("any_peer")
+func receive_hunt_hamster(hunter, prey):
+	var p_hamster = get_node("/root/Main/%s" % str(prey))
+	var h_hamster = get_node("/root/Main/%s" % str(hunter))
+	
+	if prey == multiplayer.get_unique_id():
+		get_tree().quit()
+	
+	h_hamster.add_mass(p_hamster.mass)
+
 
 # server project calls
 @rpc("any_peer")
@@ -87,3 +100,6 @@ func process_spit_nut(position, direction, requester_id): pass
 
 @rpc("any_peer")
 func process_despawn_pickup(pickup_name, requester_id): pass
+
+@rpc("any_peer")
+func process_hunt_hamster(hunter, prey): pass

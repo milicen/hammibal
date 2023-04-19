@@ -18,6 +18,10 @@ func receive_spit_nut(position, direction, size, rotation, consumable_name, requ
 func receive_despawn_pickup(pickup_name, requester_id):
 	pass
 
+@rpc("any_peer")
+func receive_hunt_hamster(hunter, prey):
+	pass
+
 # server project calls
 @rpc("any_peer")
 func process_poop_attack(position, direction, requester_id): 
@@ -46,6 +50,11 @@ func process_despawn_pickup(pickup_name, requester_id):
 	rpc('receive_despawn_pickup', pickup_name, requester_id)
 
 
+@rpc("any_peer")
+func process_hunt_hamster(hunter, prey):
+	var p_hamster = get_node("/root/Main/%s" % str(prey))
+	p_hamster.call_deferred('queue_free')
+	rpc('receive_hunt_hamster', hunter , prey)
 
 
 

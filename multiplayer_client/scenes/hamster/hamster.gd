@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Hamster
 
 # movement vars
 var speed := 300.0
@@ -88,6 +89,17 @@ func _on_pickup_area_area_entered(area:Consumable):
 		print('eat')
 		Game.request_despawn_pickup(area.name, get_multiplayer_authority())
 
+func _on_prey_area_body_entered(body: Hamster):
+	if body.name == self.name: return
+	
+	if body.mass == self.mass: return
+	
+	if body.mass < self.mass:
+		Game.request_hunt_hamster(str(self.name).to_int(), str(body.name).to_int())
+	else:
+		Game.request_hunt_hamster(str(body.name).to_int(), str(self.name).to_int())
+
+
 func calculate_mass_eat(consumable):
 	if consumable.consumable_name == 'poop':
 		mass += mass * consumable.mass / 100
@@ -110,15 +122,14 @@ func calculate_mass_release(consumable):
 
 	tween_scale()
 
+func add_mass(num):
+	mass += num
+	tween_scale()
+
 func tween_scale():
 	var tween = create_tween().set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	var final_scale = Vector2.ONE * (mass ** growth_rate)
 	tween.tween_property(self, "scale", final_scale, 0.3)
-
-
-
-
-
 
 
 

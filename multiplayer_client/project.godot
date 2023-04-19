@@ -37,6 +37,11 @@ spit_nut={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="world"
+2d_physics/layer_2="hamster"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
