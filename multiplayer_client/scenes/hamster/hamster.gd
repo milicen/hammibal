@@ -52,7 +52,14 @@ func _physics_process(delta):
 		velocity = lerp(velocity, Vector2.ZERO, 0.1)
 
 	rotation = velocity.angle()
-	move_and_slide()
+	# if colliding with somwthing
+	if move_and_slide():
+		var coll = get_last_slide_collision()
+		var obj = coll.get_collider()
+		var dir = global_position.direction_to(obj.global_position)
+		var force = dir * clamp(velocity.length(), 0, 100) 
+		Game.rpc('move_toy_ball', obj.name, force)
+
 
 func _unhandled_input(event):
 	if not is_multiplayer_authority(): return

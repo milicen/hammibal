@@ -21,6 +21,7 @@ func connect_to_server():
 			print('connected to server ')
 			rpc_id(1, 'add_player', multiplayer.get_unique_id())
 			request_existing_consumables(multiplayer.get_unique_id())
+			request_existing_toy_ball(multiplayer.get_unique_id())
 	)
 	
 	multiplayer.server_disconnected.connect(
@@ -47,6 +48,18 @@ func add_existing_consumables(consumables):
 		Game.instance_consumable(consumables[num])
 	
 
+func request_existing_toy_ball(id):
+	rpc_id(1, 'process_existing_toy_ball', id)
+
+
+@rpc("any_peer")
+func add_existing_toy_ball(toy_ball_arr):
+	for data in toy_ball_arr:
+		Game.instance_toy_ball(data)
+
 # server calls
 @rpc("any_peer")
 func process_existing_consumables(id): pass
+
+@rpc("any_peer")
+func process_existing_toy_ball(id): pass

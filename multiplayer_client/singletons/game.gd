@@ -4,6 +4,7 @@ extends Node
 var poop_scene = preload("res://scenes/consumables/poop.tscn")
 var sun_seed_scene = preload("res://scenes/consumables/sun_seed.tscn")
 var pumpkin_seed_scene = preload("res://scenes/consumables/pumpkin_seed.tscn")
+var toy_ball = preload("res://scenes/objects/toy_ball.tscn")
 
 func instance_consumable(data: Dictionary):
 	var c_name = str(data.name).to_snake_case()
@@ -34,6 +35,17 @@ func instance_consumable(data: Dictionary):
 		pumpkin_seed.mass = data.mass
 		get_node("/root/Main").add_child(pumpkin_seed)
 
+func instance_toy_ball(data: Dictionary):
+	var tb = toy_ball.instantiate()
+	tb.name = data.name
+	tb.global_position = data.position
+	tb.rotation = data.rotation
+	get_node("/root/Main").add_child(tb)
+
+@rpc("any_peer","call_local")
+func move_toy_ball(ball_name, force):
+	var ball = get_node("/root/Main/%s" % str(ball_name))
+	ball.force = force
 
 func request_poop_attack(position, direction, requester_id):
 	rpc_id(1, 'process_poop_attack', position, direction, requester_id)
@@ -87,9 +99,25 @@ func receive_hunt_hamster(hunter, prey):
 	
 	if prey == multiplayer.get_unique_id():
 		get_tree().quit()
+		return
 	
 	h_hamster.add_mass(p_hamster.mass)
+	p_hamster.queue_free()
 
+func request_kill_hamster(hamster_name):
+	rpc_id(1, 'process_kill_hamster', hamster_name)
+
+@rpc("any_peer")
+func receive_kill_hamster(hamster_name):
+	var hamster = get_node("/root/Main/%s" % str(hamster_name))
+	
+	if str(hamster_name).to_int() == multiplayer.get_unique_id():
+		get_tree().quit()
+		return
+	
+	hamster.queue_free()
+	
+	
 
 # server project calls
 @rpc("any_peer")
@@ -103,3 +131,6 @@ func process_despawn_pickup(pickup_name, requester_id): pass
 
 @rpc("any_peer")
 func process_hunt_hamster(hunter, prey): pass
+
+@rpc("any_peer")
+func process_kill_hamster(hamster_name): pass

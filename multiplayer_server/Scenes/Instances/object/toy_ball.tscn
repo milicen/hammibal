@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://p8syjgeet6f1"]
+
+[ext_resource type="Script" path="res://Scenes/Instances/object/toy_ball.gd" id="1_4ameg"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oxcr6"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:force")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath(".:is_moving")
+properties/2/spawn = true
+properties/2/sync = true
+
+[node name="ToyBall" type="Node2D" groups=["toy_ball"]]
+script = ExtResource("1_4ameg")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_oxcr6")

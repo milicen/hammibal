@@ -4,3 +4,5 @@
 
 [node name="Server" type="Node"]
 script = ExtResource("1_fgvun")
+map_width = 1152.0
+map_height = 648.0

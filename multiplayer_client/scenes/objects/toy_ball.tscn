@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://t026wbwt2jhx"]
+
+[ext_resource type="Script" path="res://scenes/objects/toy_ball.gd" id="1_81s8i"]
+[ext_resource type="Texture2D" uid="uid://dsaxvmylco87s" path="res://assets/food/toy ball.png" id="1_uiyal"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8mh5g"]
+radius = 73.2462
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dju1c"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:force")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath(".:is_moving")
+properties/2/spawn = true
+properties/2/sync = true
+
+[node name="ToyBall" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_81s8i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4, -3)
+texture = ExtResource("1_uiyal")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8mh5g")
+
+[node name="HamsterArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HamsterArea"]
+shape = SubResource("CircleShape2D_8mh5g")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_dju1c")
+
+[connection signal="body_entered" from="HamsterArea" to="." method="_on_hamster_area_body_entered"]

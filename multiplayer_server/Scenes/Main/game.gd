@@ -7,20 +7,24 @@ var pumpkin_seed = preload("res://Scenes/Instances/consumable/pumpkin_seed.tscn"
 
 #client porject calls
 @rpc("any_peer")
-func receive_poop_attack(position, direction, size, rotation, consumable_name, requester_id):
-	pass
+func receive_poop_attack(position, direction, size, rotation, consumable_name, requester_id): pass
 
 @rpc("any_peer")
-func receive_spit_nut(position, direction, size, rotation, consumable_name, requester_id):
-	pass
+func receive_spit_nut(position, direction, size, rotation, consumable_name, requester_id): pass
 
 @rpc("any_peer")
-func receive_despawn_pickup(pickup_name, requester_id):
-	pass
+func receive_despawn_pickup(pickup_name, requester_id): pass
 
 @rpc("any_peer")
-func receive_hunt_hamster(hunter, prey):
-	pass
+func receive_hunt_hamster(hunter, prey): 	pass
+
+@rpc("any_peer")
+func receive_kill_hamster(hamster_name): pass
+
+@rpc("any_peer","call_local")
+func move_toy_ball(ball_name, force): 
+	var ball = get_node("/root/Main/%s" % str(ball_name))
+	ball.force = force
 
 # server project calls
 @rpc("any_peer")
@@ -56,7 +60,11 @@ func process_hunt_hamster(hunter, prey):
 	p_hamster.call_deferred('queue_free')
 	rpc('receive_hunt_hamster', hunter , prey)
 
-
+@rpc("any_peer")
+func process_kill_hamster(hamster_name):
+	var hamster = get_node("/root/Main/%s" % str(hamster_name))
+	hamster.call_deferred('queue_free')
+	rpc('receive_kill_hamster', hamster_name)
 
 
 

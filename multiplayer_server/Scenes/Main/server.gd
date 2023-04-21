@@ -5,7 +5,11 @@ var network = ENetMultiplayerPeer.new()
 var port = 9898
 var max_players = 100
 
+@export var map_width: float
+@export var map_height: float
+
 @onready var player = preload("res://Scenes/Instances/player.tscn")
+@onready var toy_ball = preload("res://Scenes/Instances/object/toy_ball.tscn")
 
 func _ready():
 	start_server()
@@ -16,6 +20,8 @@ func start_server():
 	print('Server started')
 	multiplayer.peer_connected.connect(_on_PeerConnected)
 	multiplayer.peer_disconnected.connect(_on_PeerDisconnected)
+	
+	spawn_toy_balls(4)
 	
 
 func _on_PeerConnected(player_id):
@@ -28,6 +34,15 @@ func _on_PeerDisconnected(player_id):
 		get_node('/root/Main/%s' % str(player_id)).queue_free()
 	
 	pass
+
+func spawn_toy_balls(num_of_ball: int):
+	for n in num_of_ball:
+		var ball = toy_ball.instantiate()
+		var rand_x = randf_range(0, map_width)
+		var rand_y = randf_range(0, map_height)
+		var pos = Vector2(rand_x, rand_y)
+		get_node("/root/Main").add_child(ball, true)
+		ball.global_position = pos
 
 @rpc("any_peer")
 func add_player(id):
@@ -50,8 +65,25 @@ func process_existing_consumables(id):
 		}
 		arr.append(data)
 	rpc_id(id, 'add_existing_consumables', arr)
-	pass
+
+
+@rpc("any_peer")
+func process_existing_toy_ball(id):
+	var toy_ball_arr = get_tree().get_nodes_in_group('toy_ball')
+	var arr = []
+	for toy_ball in toy_ball_arr:
+		var data = {
+			'name': toy_ball.name,
+			'position': toy_ball.global_position,
+			'rotation': toy_ball.rotation
+		}
+		arr.append(data)
+	rpc_id(id, 'add_existing_toy_ball', arr)
+
 
 # client calls
 @rpc("any_peer")
 func add_existing_consumables(consumables): pass
+
+@rpc("any_peer")
+func add_existing_toy_ball(toy_ball_arr): pass
