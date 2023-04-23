@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dammiruvosiuh"]
+
+[ext_resource type="PackedScene" uid="uid://d1yicv28rkhri" path="res://scenes/consumables/consumable.tscn" id="1_40mjn"]
+[ext_resource type="Texture2D" uid="uid://caogffjb67gbs" path="res://assets/food/pomo seed 1.png" id="2_3qcxe"]
+
+[node name="PomoA" instance=ExtResource("1_40mjn")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_3qcxe")

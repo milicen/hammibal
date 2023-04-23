@@ -93,7 +93,6 @@ func _on_pickup_area_area_entered(area:Consumable):
 #	if not is_multiplayer_authority(): return
 	if area.spitter == get_multiplayer_authority(): return
 	if is_multiplayer_authority():
-		print('eat')
 		Game.request_despawn_pickup(area.name, get_multiplayer_authority())
 
 func _on_prey_area_body_entered(body: Hamster):

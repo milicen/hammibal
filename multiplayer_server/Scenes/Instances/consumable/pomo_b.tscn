@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcf3hm1ar7c4k"]
+
+[ext_resource type="PackedScene" uid="uid://cohmtseoj4a51" path="res://Scenes/Instances/consumable/consumable.tscn" id="1_av8xl"]
+
+[node name="PomoB" instance=ExtResource("1_av8xl")]

@@ -4,6 +4,20 @@ extends Node
 var poop_scene = preload("res://scenes/consumables/poop.tscn")
 var sun_seed_scene = preload("res://scenes/consumables/sun_seed.tscn")
 var pumpkin_seed_scene = preload("res://scenes/consumables/pumpkin_seed.tscn")
+
+var consumables = {
+	'poop': preload("res://scenes/consumables/poop.tscn"),
+	'sun_seed': preload("res://scenes/consumables/sun_seed.tscn"),
+	'pumpkin_seed': preload("res://scenes/consumables/pumpkin_seed.tscn"),
+	'carrot': preload("res://scenes/consumables/carrot.tscn"),
+	'corn_a': preload("res://scenes/consumables/corn_a.tscn"),
+	'corn_b': preload("res://scenes/consumables/corn_b.tscn"),
+	'pomo_a': preload("res://scenes/consumables/pomo_a.tscn"),
+	'pomo_b': preload("res://scenes/consumables/pomo_b.tscn"),
+	'fetus': preload("res://scenes/consumables/fetus.tscn"),
+	'lettuce': preload("res://scenes/consumables/lettuce.tscn"),
+}
+
 var toy_ball = preload("res://scenes/objects/toy_ball.tscn")
 
 func instance_consumable(data: Dictionary):
@@ -47,6 +61,13 @@ func move_toy_ball(ball_name, force):
 	var ball = get_node("/root/Main/%s" % str(ball_name))
 	ball.force = force
 
+@rpc("any_peer")
+func spawn_consumable(pos, size, rot, con_name, type):
+	var consumable = consumables[type].instantiate()
+	consumable.init(-1, pos, Vector2.ZERO, size, rot)
+	consumable.name = con_name
+	get_node("/root/Main").add_child(consumable)
+
 func request_poop_attack(position, direction, requester_id):
 	rpc_id(1, 'process_poop_attack', position, direction, requester_id)
 
@@ -54,8 +75,8 @@ func request_poop_attack(position, direction, requester_id):
 func receive_poop_attack(position, direction, size, rotation, consumable_name, requester_id):
 	var poop:Consumable = poop_scene.instantiate()
 	poop.init(requester_id, position, direction, size, rotation)
-	poop.set_multiplayer_authority(requester_id)
-	print('poop is ability: ', poop.is_ability)
+#	poop.set_multiplayer_authority(requester_id)
+#	print('poop is ability: ', poop.is_ability)
 	poop.name = consumable_name
 	get_node("/root/Main").add_child(poop)
 	
@@ -70,7 +91,7 @@ func receive_spit_nut(position, direction, size, rotation, consumable_name, requ
 	var lc_name = str(consumable_name).to_snake_case()
 	var nut = sun_seed_scene.instantiate() if lc_name.contains('sun') else pumpkin_seed_scene.instantiate()
 	nut.init(requester_id, position, direction, size, rotation)
-	nut.set_multiplayer_authority(requester_id)
+#	nut.set_multiplayer_authority(requester_id)
 	nut.name = consumable_name
 	get_node('/root/Main').add_child(nut)
 	
@@ -78,7 +99,6 @@ func receive_spit_nut(position, direction, size, rotation, consumable_name, requ
 	requester.calculate_mass_release(nut)
 
 func request_despawn_pickup(pickup_name, requester_id):
-	print('request despawn')
 	rpc_id(1, 'process_despawn_pickup', pickup_name, requester_id)
 
 @rpc("any_peer")

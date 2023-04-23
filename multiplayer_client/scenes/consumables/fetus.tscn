@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://c57mdmx577ybr"]
+
+[ext_resource type="PackedScene" uid="uid://d1yicv28rkhri" path="res://scenes/consumables/consumable.tscn" id="1_8lcch"]
+[ext_resource type="Texture2D" uid="uid://d2nv2kaodub8a" path="res://assets/food/fetus.png" id="2_okc60"]
+
+[node name="Fetus" instance=ExtResource("1_8lcch")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_okc60")

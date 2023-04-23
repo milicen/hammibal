@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxdosmbke86wm"]
+
+[ext_resource type="PackedScene" uid="uid://cohmtseoj4a51" path="res://Scenes/Instances/consumable/consumable.tscn" id="1_i827s"]
+
+[node name="Lettuce" instance=ExtResource("1_i827s")]
+position = Vector2(1, 0)

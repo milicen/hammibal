@@ -1,18 +1,16 @@
 extends Area2D
 class_name Consumable
 
-@export var consumable_name: String
 @export var mass: float
-@export var is_ability: bool
+@export var spitter: int
+@export var direction: Vector2
+@export var is_moving := false
+
+@export var consumable_name: String
 @export var speed: float = 1000.0
-var spitter = null
-var direction: Vector2
-var is_moving := false
 var velocity := Vector2.ZERO
 var start_pos := Vector2.ZERO
 
-
-@onready var sprite := $Sprite2D
 
 func _ready():
 	if not spitter:
@@ -20,13 +18,12 @@ func _ready():
 		return
 	
 	global_position = start_pos
-	if is_ability:
+	if direction != Vector2.ZERO:
 		set_physics_process(true)
 		is_moving = true
 	else:
 		set_physics_process(false)
 	
-	print(get_multiplayer_authority())
 
 func _physics_process(delta):
 	if is_moving:
@@ -48,7 +45,7 @@ func init(spitter, start_position: Vector2, direction: Vector2, rand_size: float
 
 func _on_timer_timeout():
 	is_moving = false
-	spitter = null
+	spitter = -1
 
 
 func despawn():

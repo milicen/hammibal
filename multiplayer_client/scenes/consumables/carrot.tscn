@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://clnmln4eyshjh"]
+
+[ext_resource type="PackedScene" uid="uid://d1yicv28rkhri" path="res://scenes/consumables/consumable.tscn" id="1_joyeo"]
+[ext_resource type="Texture2D" uid="uid://bd7xu7vjl2uce" path="res://assets/food/carrot.png" id="2_ut7ii"]
+
+[node name="Carrot" instance=ExtResource("1_joyeo")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_ut7ii")
