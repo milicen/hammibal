@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx86xjlmcrwy0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ap0jn"]
+size = Vector2(136, 3821)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q1n8g"]
+size = Vector2(5603, 180.5)
+
+[node name="Map" type="TextureRect"]
+z_index = -2
+z_as_relative = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2077.0
+offset_top = -1563.0
+offset_right = 2078.0
+offset_bottom = 1563.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 1
+
+[node name="WorldBoundaries" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(-88, 1900.5)
+shape = SubResource("RectangleShape2D_ap0jn")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(5375, 1901)
+shape = SubResource("RectangleShape2D_ap0jn")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(2641.5, -99.25)
+shape = SubResource("RectangleShape2D_q1n8g")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(2641.5, 3902)
+shape = SubResource("RectangleShape2D_q1n8g")

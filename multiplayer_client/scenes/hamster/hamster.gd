@@ -56,6 +56,9 @@ func _physics_process(delta):
 	if move_and_slide():
 		var coll = get_last_slide_collision()
 		var obj = coll.get_collider()
+		
+		if not obj.is_in_group('toy_ball'): return
+		
 		var dir = global_position.direction_to(obj.global_position)
 		var force = dir * clamp(velocity.length(), 0, 100) 
 		Game.rpc('move_toy_ball', obj.name, force)

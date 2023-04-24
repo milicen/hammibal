@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Server="*res://singletons/server.gd"
 Game="*res://singletons/game.gd"
+Map="res://scenes/map.tscn"
 
 [dotnet]
 
@@ -47,3 +48,4 @@ spit_nut={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(1, 1, 1, 1)

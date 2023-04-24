@@ -60,6 +60,7 @@ func instance_toy_ball(data: Dictionary):
 func move_toy_ball(ball_name, force):
 	var ball = get_node("/root/Main/%s" % str(ball_name))
 	ball.force = force
+#	ball.set_velocity(force)
 
 @rpc("any_peer")
 func spawn_consumable(pos, size, rot, con_name, type):
@@ -110,19 +111,21 @@ func receive_despawn_pickup(pickup_name, requester_id):
 		
 
 func request_hunt_hamster(hunter, prey):
+	var p_hamster = get_node_or_null("/root/Main/%s" % str(prey))
+	var h_hamster = get_node("/root/Main/%s" % str(hunter))
+	h_hamster.add_mass(p_hamster.mass)
 	rpc_id(1, 'process_hunt_hamster', hunter, prey)
 
 @rpc("any_peer")
 func receive_hunt_hamster(hunter, prey):
-	var p_hamster = get_node("/root/Main/%s" % str(prey))
-	var h_hamster = get_node("/root/Main/%s" % str(hunter))
+	var p_hamster = get_node_or_null("/root/Main/%s" % str(prey))
 	
 	if prey == multiplayer.get_unique_id():
 		get_tree().quit()
 		return
 	
-	h_hamster.add_mass(p_hamster.mass)
-	p_hamster.queue_free()
+	if p_hamster:
+		p_hamster.queue_free()
 
 func request_kill_hamster(hamster_name):
 	rpc_id(1, 'process_kill_hamster', hamster_name)

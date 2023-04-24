@@ -2,7 +2,7 @@ extends Node
 
 var network = ENetMultiplayerPeer.new()
 var port = 9898
-var host = 'localhost'
+var host = '192.168.63.146'
 
 var player = preload("res://scenes/hamster/hamster.tscn")
 

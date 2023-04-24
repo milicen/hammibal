@@ -18,8 +18,8 @@ var consumables = {
 	'lettuce': preload("res://Scenes/Instances/consumable/lettuce.tscn"),
 }
 
-const MAP_WIDTH = 1152
-const MAP_HEIGHT = 648
+const MAP_POS = Vector2(-2077,-1563)
+const MAP_SIZE = Vector2(5307+MAP_POS.x,3774+MAP_POS.y) 
 
 #client porject calls
 @rpc("any_peer")
@@ -50,8 +50,8 @@ func spawn_consumable():
 	
 	var rand_size = randf_range(0.4, 0.6)
 	var rand_rotation = randf_range(0, 2*PI)
-	var rand_x = randf_range(0, MAP_WIDTH)
-	var rand_y = randf_range(0, MAP_HEIGHT)
+	var rand_x = randf_range(MAP_POS.x, MAP_SIZE.x)
+	var rand_y = randf_range(MAP_POS.y, MAP_SIZE.y)
 	var pos = Vector2(rand_x, rand_y)
 #	consumable.global_position = pos
 #	consumable.rotation = rand_rotation

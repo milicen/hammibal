@@ -38,8 +38,8 @@ func _on_PeerDisconnected(player_id):
 func spawn_toy_balls(num_of_ball: int):
 	for n in num_of_ball:
 		var ball = toy_ball.instantiate()
-		var rand_x = randf_range(0, map_width)
-		var rand_y = randf_range(0, map_height)
+		var rand_x = randf_range(Game.MAP_POS.x, Game.MAP_SIZE.x)
+		var rand_y = randf_range(Game.MAP_POS.y, Game.MAP_SIZE.y)
 		var pos = Vector2(rand_x, rand_y)
 		get_node("/root/Main").add_child(ball, true)
 		ball.global_position = pos

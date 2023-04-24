@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://p8syjgeet6f1"]
+[gd_scene load_steps=4 format=3 uid="uid://p8syjgeet6f1"]
 
 [ext_resource type="Script" path="res://Scenes/Instances/object/toy_ball.gd" id="1_4ameg"]
 
@@ -6,15 +6,22 @@
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/sync = true
-properties/1/path = NodePath(".:force")
+properties/1/path = NodePath(".:is_moving")
 properties/1/spawn = true
 properties/1/sync = true
-properties/2/path = NodePath(".:is_moving")
+properties/2/path = NodePath(".:force")
 properties/2/spawn = true
 properties/2/sync = true
 
-[node name="ToyBall" type="Node2D" groups=["toy_ball"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_cuyvj"]
+radius = 67.01
+
+[node name="ToyBall" type="CharacterBody2D" groups=["toy_ball"]]
+collision_layer = 4
 script = ExtResource("1_4ameg")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_oxcr6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cuyvj")
