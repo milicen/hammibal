@@ -45,6 +45,10 @@ func spawn_toy_balls(num_of_ball: int):
 		ball.global_position = pos
 
 @rpc("any_peer")
+func disconnect_from_server(peer_id):
+	network.disconnect_peer(peer_id)
+
+@rpc("any_peer")
 func add_player(id):
 	var p = player.instantiate()
 	p.name = str(id)

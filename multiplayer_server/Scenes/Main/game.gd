@@ -97,14 +97,14 @@ func process_despawn_pickup(pickup_name, requester_id):
 @rpc("any_peer")
 func process_hunt_hamster(hunter, prey):
 	var p_hamster = get_node_or_null("/root/Main/%s" % str(prey))
-	if p_hamster:
-		p_hamster.call_deferred('queue_free')
+#	if p_hamster:
+#		p_hamster.call_deferred('queue_free')
 	rpc('receive_hunt_hamster', hunter , prey)
 
 @rpc("any_peer")
 func process_kill_hamster(hamster_name):
 	var hamster = get_node("/root/Main/%s" % str(hamster_name))
-	hamster.call_deferred('queue_free')
+#	hamster.call_deferred('queue_free')
 	rpc('receive_kill_hamster', hamster_name)
 
 

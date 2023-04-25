@@ -108,6 +108,12 @@ func _on_prey_area_body_entered(body: Hamster):
 	else:
 		Game.request_hunt_hamster(str(body.name).to_int(), str(self.name).to_int())
 
+func freeze_hamster():
+	set_physics_process(false)
+	sprite.hide()
+	$CollisionShape2D.disabled = true
+	$PickupArea/CollisionShape2D.disabled = true
+	$PreyArea/CollisionShape2D.disabled = true
 
 func calculate_mass_eat(consumable):
 	if consumable.consumable_name == 'poop':

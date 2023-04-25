@@ -13,6 +13,8 @@ func _ready():
 
 
 func connect_to_server():
+	
+	
 	network.create_client(host, port)
 	multiplayer.multiplayer_peer = network
 	
@@ -29,6 +31,12 @@ func connect_to_server():
 			print('disconnected from server')
 			
 	)
+
+@rpc("any_peer")
+func disconnect_from_server(peer_id):
+	rpc_id(1, 'disconnect_from_server', peer_id)
+	pass
+#	network.disconnect_peer(multiplayer.get_unique_id())
 
 
 @rpc("any_peer")

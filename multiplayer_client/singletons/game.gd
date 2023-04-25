@@ -19,6 +19,10 @@ var consumables = {
 }
 
 var toy_ball = preload("res://scenes/objects/toy_ball.tscn")
+var end_game_panel = preload("res://scenes/end_game/end_game_panel.tscn")
+
+func is_main_null():
+	return get_node_or_null("/root/Main") == null
 
 func instance_consumable(data: Dictionary):
 	var c_name = str(data.name).to_snake_case()
@@ -29,7 +33,8 @@ func instance_consumable(data: Dictionary):
 		poop.position = data.position
 		poop.rotation = data.rotation
 		poop.mass = data.mass
-		get_node("/root/Main").add_child(poop)
+		if is_main_null(): return
+		get_node_or_null("/root/Main").add_child(poop)
 	
 	if c_name.contains('sun'):
 		var sun_seed:Consumable = sun_seed_scene.instantiate()
@@ -38,7 +43,8 @@ func instance_consumable(data: Dictionary):
 		sun_seed.position = data.position
 		sun_seed.rotation = data.rotation
 		sun_seed.mass = data.mass
-		get_node("/root/Main").add_child(sun_seed)
+		if is_main_null(): return
+		get_node_or_null("/root/Main").add_child(sun_seed)
 	
 	if c_name.contains('pumpkin'):
 		var pumpkin_seed:Consumable = pumpkin_seed_scene.instantiate()
@@ -47,14 +53,16 @@ func instance_consumable(data: Dictionary):
 		pumpkin_seed.position = data.position
 		pumpkin_seed.rotation = data.rotation
 		pumpkin_seed.mass = data.mass
-		get_node("/root/Main").add_child(pumpkin_seed)
+		if is_main_null(): return
+		get_node_or_null("/root/Main").add_child(pumpkin_seed)
 
 func instance_toy_ball(data: Dictionary):
 	var tb = toy_ball.instantiate()
 	tb.name = data.name
 	tb.global_position = data.position
 	tb.rotation = data.rotation
-	get_node("/root/Main").add_child(tb)
+	if is_main_null(): return
+	get_node_or_null("/root/Main").add_child(tb)
 
 @rpc("any_peer","call_local")
 func move_toy_ball(ball_name, force):
@@ -67,7 +75,8 @@ func spawn_consumable(pos, size, rot, con_name, type):
 	var consumable = consumables[type].instantiate()
 	consumable.init(-1, pos, Vector2.ZERO, size, rot)
 	consumable.name = con_name
-	get_node("/root/Main").add_child(consumable)
+	if is_main_null(): return
+	get_node_or_null("/root/Main").add_child(consumable)
 
 func request_poop_attack(position, direction, requester_id):
 	rpc_id(1, 'process_poop_attack', position, direction, requester_id)
@@ -79,7 +88,8 @@ func receive_poop_attack(position, direction, size, rotation, consumable_name, r
 #	poop.set_multiplayer_authority(requester_id)
 #	print('poop is ability: ', poop.is_ability)
 	poop.name = consumable_name
-	get_node("/root/Main").add_child(poop)
+	if is_main_null(): return
+	get_node_or_null("/root/Main").add_child(poop)
 	
 	var requester = get_node("/root/Main/%s" % str(requester_id))
 	requester.calculate_mass_release(poop)
@@ -94,6 +104,7 @@ func receive_spit_nut(position, direction, size, rotation, consumable_name, requ
 	nut.init(requester_id, position, direction, size, rotation)
 #	nut.set_multiplayer_authority(requester_id)
 	nut.name = consumable_name
+	if is_main_null(): return
 	get_node('/root/Main').add_child(nut)
 	
 	var requester = get_node("/root/Main/%s" % str(requester_id))
@@ -119,13 +130,16 @@ func request_hunt_hamster(hunter, prey):
 @rpc("any_peer")
 func receive_hunt_hamster(hunter, prey):
 	var p_hamster = get_node_or_null("/root/Main/%s" % str(prey))
+	p_hamster.freeze_hamster()
 	
 	if prey == multiplayer.get_unique_id():
-		get_tree().quit()
+#		get_tree().quit()
+		var panel = end_game_panel.instantiate()
+		get_node("/root").add_child(panel)
 		return
 	
-	if p_hamster:
-		p_hamster.queue_free()
+#	if p_hamster:
+#		p_hamster.queue_free()
 
 func request_kill_hamster(hamster_name):
 	rpc_id(1, 'process_kill_hamster', hamster_name)
@@ -133,12 +147,15 @@ func request_kill_hamster(hamster_name):
 @rpc("any_peer")
 func receive_kill_hamster(hamster_name):
 	var hamster = get_node("/root/Main/%s" % str(hamster_name))
+	hamster.freeze_hamster()
 	
 	if str(hamster_name).to_int() == multiplayer.get_unique_id():
-		get_tree().quit()
+#		get_tree().quit()
+		var panel = end_game_panel.instantiate()
+		get_node("/root").add_child(panel)
 		return
 	
-	hamster.queue_free()
+#	hamster.queue_free()
 	
 	
 
