@@ -1,0 +1,617 @@
+[gd_scene load_steps=34 format=3 uid="uid://d1aliwlaaovyn"]
+
+[ext_resource type="Script" path="res://scenes/home/home.gd" id="1_hqcwj"]
+[ext_resource type="Theme" uid="uid://b0xtrucce6h42" path="res://themes/main_theme.tres" id="1_r5eka"]
+[ext_resource type="Texture2D" uid="uid://cn0r7y4t7eiex" path="res://assets/ui/logo_full.png" id="2_iihw4"]
+[ext_resource type="Texture2D" uid="uid://d2qgdvd8sxhhl" path="res://assets/ui/panel_basic.png" id="3_gfky7"]
+[ext_resource type="Texture2D" uid="uid://y27wakgscxn1" path="res://assets/ui/arrow_left.png" id="4_kfwu8"]
+[ext_resource type="Texture2D" uid="uid://dqo7v14nms4i2" path="res://assets/ui/arrow_right.png" id="5_62kn0"]
+[ext_resource type="Texture2D" uid="uid://cfpjdvu8st7yg" path="res://assets/hamster_profiles/profile--winter_white.png" id="5_a5ww4"]
+[ext_resource type="Script" path="res://scenes/home/PlayerInfo.gd" id="5_jucvx"]
+[ext_resource type="Texture2D" uid="uid://bbc825w4d4her" path="res://assets/ui/panel_long.png" id="6_45bja"]
+[ext_resource type="Script" path="res://scenes/home/HamsterSelect.gd" id="6_glmx2"]
+[ext_resource type="Shader" path="res://shaders/mode_btn_shadow_shader.gdshader" id="7_i1qlx"]
+[ext_resource type="Texture2D" uid="uid://dmm3oaooihogk" path="res://assets/ui/mode_solo.png" id="7_id4ca"]
+[ext_resource type="Shader" path="res://shaders/mode_btn_shader.gdshader" id="7_ka112"]
+[ext_resource type="Texture2D" uid="uid://bfnmkgkegmedk" path="res://assets/ui/mode_team.png" id="8_eyo4y"]
+[ext_resource type="Script" path="res://scenes/home/GameModeInfo.gd" id="8_sq2af"]
+[ext_resource type="Script" path="res://scenes/home/Inputs.gd" id="10_1y4j2"]
+[ext_resource type="Material" uid="uid://raa0lacmje42" path="res://shaders/team_container.tres" id="11_gwkff"]
+[ext_resource type="Script" path="res://scenes/home/ModeButton.gd" id="11_uyujq"]
+[ext_resource type="PackedScene" uid="uid://cv6i4v3vbng1m" path="res://scenes/home/ui/team_profile.tscn" id="13_qrt77"]
+[ext_resource type="Script" path="res://scenes/home/TeamContainer.gd" id="16_oakav"]
+[ext_resource type="Texture2D" uid="uid://ckbnu4btb3ld7" path="res://assets/ui/team_icon.png" id="21_22prt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gy33o"]
+shader = ExtResource("7_i1qlx")
+shader_parameter/hue = Color(0.952941, 0.85098, 0.411765, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3lvq6"]
+resource_local_to_scene = true
+shader = ExtResource("7_ka112")
+shader_parameter/vertex_offset = 0.0
+
+[sub_resource type="Animation" id="Animation_o2cdh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer/VBoxContainer/Modes/SoloButton/TextureButton3:material:shader_parameter/vertex_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_y4hg5"]
+resource_name = "toggle"
+length = 0.15
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer/VBoxContainer/Modes/SoloButton/TextureButton3:material:shader_parameter/vertex_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -15.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p7sks"]
+_data = {
+"RESET": SubResource("Animation_o2cdh"),
+"toggle": SubResource("Animation_y4hg5")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x1qbw"]
+resource_local_to_scene = true
+shader = ExtResource("7_ka112")
+shader_parameter/vertex_offset = 0.0
+
+[sub_resource type="Animation" id="Animation_gaub8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureButton3:material:shader_parameter/vertex_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_umsac"]
+resource_name = "toggle"
+length = 0.15
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureButton3:material:shader_parameter/vertex_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -15.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_88fu6"]
+_data = {
+"RESET": SubResource("Animation_gaub8"),
+"toggle": SubResource("Animation_umsac")
+}
+
+[sub_resource type="Animation" id="Animation_1qh28"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/percentage")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/CreateTeamButton:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/JoinTeamButton:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/CreateTeamButton:mouse_filter")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/JoinTeamButton:mouse_filter")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_gg3g3"]
+resource_name = "toggle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/percentage")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/CreateTeamButton:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/JoinTeamButton:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/CreateTeamButton:mouse_filter")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/JoinTeamButton:mouse_filter")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6nke7"]
+_data = {
+"RESET": SubResource("Animation_1qh28"),
+"toggle": SubResource("Animation_gg3g3")
+}
+
+[node name="Home" type="CanvasLayer"]
+script = ExtResource("1_hqcwj")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_r5eka")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="Logo" type="TextureRect" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_iihw4")
+stretch_mode = 5
+
+[node name="GameInfoContainer" type="HSplitContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+collapsed = true
+dragger_visibility = 1
+
+[node name="PlayerInfo" type="TextureRect" parent="CenterContainer/VBoxContainer/GameInfoContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("3_gfky7")
+stretch_mode = 2
+script = ExtResource("5_jucvx")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Your Hammibal"
+horizontal_alignment = 1
+
+[node name="HamsterSelect" type="HBoxContainer" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+script = ExtResource("6_glmx2")
+
+[node name="LeftButton" type="TextureButton" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect"]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("4_kfwu8")
+
+[node name="HamsterProfile" type="TextureRect" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect"]
+layout_mode = 2
+texture = ExtResource("5_a5ww4")
+
+[node name="RightButton" type="TextureButton" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("5_62kn0")
+
+[node name="Inputs" type="VBoxContainer" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer" node_paths=PackedStringArray("input", "join_btn")]
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("10_1y4j2")
+input = NodePath("TextInput/HBoxContainer/LineEdit")
+join_btn = NodePath("JoinGameButton")
+
+[node name="TextInput" type="PanelContainer" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs/TextInput"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "Name : "
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_placeholder_color = Color(0.682353, 0.682353, 0.682353, 1)
+theme_override_colors/caret_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Enter your name"
+caret_blink = true
+
+[node name="JoinGameButton" type="Button" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+disabled = true
+text = "Join into cage!"
+
+[node name="GameModeInfo" type="TextureRect" parent="CenterContainer/VBoxContainer/GameInfoContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("3_gfky7")
+script = ExtResource("8_sq2af")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 45
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Game Mode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Modes" type="HSplitContainer" parent="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer"]
+layout_mode = 2
+collapsed = true
+dragger_visibility = 1
+
+[node name="SoloButton" type="TextureButton" parent="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer/Modes"]
+material = SubResource("ShaderMaterial_gy33o")
+layout_mode = 2
+texture_normal = ExtResource("7_id4ca")
+script = ExtResource("11_uyujq")
+
+[node name="TextureButton3" type="TextureRect" parent="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer/Modes/SoloButton"]
+material = SubResource("ShaderMaterial_3lvq6")
+layout_mode = 2
+offset_right = 203.0
+offset_bottom = 220.0
+texture = ExtResource("7_id4ca")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer/Modes/SoloButton"]
+root_node = NodePath("../../../../..")
+libraries = {
+"": SubResource("AnimationLibrary_p7sks")
+}
+
+[node name="TeamButton" type="TextureButton" parent="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer/Modes"]
+material = SubResource("ShaderMaterial_gy33o")
+layout_mode = 2
+texture_normal = ExtResource("7_id4ca")
+script = ExtResource("11_uyujq")
+
+[node name="TextureButton3" type="TextureRect" parent="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer/Modes/TeamButton"]
+material = SubResource("ShaderMaterial_x1qbw")
+layout_mode = 2
+offset_right = 203.0
+offset_bottom = 220.0
+texture = ExtResource("8_eyo4y")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer/Modes/TeamButton"]
+libraries = {
+"": SubResource("AnimationLibrary_88fu6")
+}
+
+[node name="TeamContainer" type="TextureRect" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+material = ExtResource("11_gwkff")
+layout_mode = 2
+texture = ExtResource("6_45bja")
+stretch_mode = 2
+script = ExtResource("16_oakav")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer/TeamContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+collapsed = true
+dragger_visibility = 1
+
+[node name="TeamProfileContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="TeamProfile" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamProfileContainer" instance=ExtResource("13_qrt77")]
+layout_mode = 2
+
+[node name="TeamProfile2" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamProfileContainer" instance=ExtResource("13_qrt77")]
+layout_mode = 2
+
+[node name="TeamProfile3" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamProfileContainer" instance=ExtResource("13_qrt77")]
+layout_mode = 2
+
+[node name="TeamProfile4" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamProfileContainer" instance=ExtResource("13_qrt77")]
+layout_mode = 2
+
+[node name="TeamProfile5" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamProfileContainer" instance=ExtResource("13_qrt77")]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Team"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CreateTeamButton" type="Button" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+disabled = true
+text = "Create"
+
+[node name="JoinTeamButton" type="Button" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"ButtonBlue"
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+disabled = true
+text = "Join"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer/VBoxContainer/TeamContainer"]
+libraries = {
+"": SubResource("AnimationLibrary_6nke7")
+}
+
+[node name="JoinTeamPopup" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.462745)
+
+[node name="PopupPanel" type="TextureRect" parent="JoinTeamPopup"]
+top_level = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -247.0
+offset_top = -208.5
+offset_right = 247.0
+offset_bottom = 208.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_r5eka")
+texture = ExtResource("3_gfky7")
+stretch_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="JoinTeamPopup/PopupPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="JoinTeamPopup/PopupPanel/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Your Hammibal"
+horizontal_alignment = 1
+
+[node name="HamsterSelect" type="HBoxContainer" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="HamsterProfile" type="TextureRect" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/HamsterSelect"]
+layout_mode = 2
+texture = ExtResource("21_22prt")
+
+[node name="Inputs" type="VBoxContainer" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("input", "join_btn", "root")]
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("10_1y4j2")
+input = NodePath("TextInput/HBoxContainer/LineEdit")
+join_btn = NodePath("JoinTeamButton")
+is_popup = true
+root = NodePath("../../../..")
+
+[node name="TextInput" type="PanelContainer" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs/TextInput"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "Code : "
+vertical_alignment = 1
+uppercase = true
+
+[node name="LineEdit" type="LineEdit" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_placeholder_color = Color(0.682353, 0.682353, 0.682353, 1)
+theme_override_colors/caret_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Enter team code"
+caret_blink = true
+
+[node name="JoinTeamButton" type="Button" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+disabled = true
+text = "Join team!"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect/LeftButton" to="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect" method="_on_left_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect/RightButton" to="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect" method="_on_right_button_pressed"]
+[connection signal="join_game" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs" to="." method="_on_inputs_join_game"]
+[connection signal="text_changed" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer/LineEdit" to="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs" method="_on_line_edit_text_changed"]
+[connection signal="select_mode" from="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo" to="." method="_on_game_mode_info_select_mode"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer/Modes/SoloButton" to="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo" method="_on_solo_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer/Modes/TeamButton" to="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo" method="_on_team_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/VBoxContainer/CreateTeamButton" to="CenterContainer/VBoxContainer/TeamContainer" method="_on_create_team_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/VBoxContainer/JoinTeamButton" to="CenterContainer/VBoxContainer/TeamContainer" method="_on_join_team_button_pressed"]
+[connection signal="text_changed" from="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer/LineEdit" to="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs" method="_on_line_edit_text_changed"]

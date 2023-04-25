@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://cv6i4v3vbng1m"]
+
+[ext_resource type="Material" uid="uid://raa0lacmje42" path="res://shaders/team_container.tres" id="1_7xkuo"]
+[ext_resource type="Texture2D" uid="uid://cbh7qht5miy0i" path="res://assets/ui/profile_empty.png" id="2_vxse7"]
+
+[node name="TeamProfile" type="VSplitContainer"]
+collapsed = true
+dragger_visibility = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = ExtResource("1_7xkuo")
+layout_mode = 2
+texture = ExtResource("2_vxse7")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "???"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3

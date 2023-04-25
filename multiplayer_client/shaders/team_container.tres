@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://raa0lacmje42"]
+
+[ext_resource type="Shader" path="res://shaders/team_container_shader.gdshader" id="1_2h2qo"]
+
+[resource]
+shader = ExtResource("1_2h2qo")
+shader_parameter/percentage = 1.0

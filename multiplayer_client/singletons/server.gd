@@ -2,13 +2,13 @@ extends Node
 
 var network = ENetMultiplayerPeer.new()
 var port = 9898
-var host = '192.168.63.146'
+var host = 'localhost'
 
 var player = preload("res://scenes/hamster/hamster.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	connect_to_server()
+#	connect_to_server()
 	pass # Replace with function body.
 
 

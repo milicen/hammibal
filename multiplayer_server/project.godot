@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Server="*res://Scenes/Main/server.tscn"
 Game="*res://Scenes/Main/game.gd"
 Spawner="*res://Scenes/Instances/object/spawner.tscn"
+Map="res://Scenes/Instances/object/map.tscn"
 
 [dotnet]
 

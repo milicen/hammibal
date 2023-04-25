@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="multiplayer_client"
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://scenes/home/home.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -20,6 +20,15 @@ config/icon="res://icon.svg"
 Server="*res://singletons/server.gd"
 Game="*res://singletons/game.gd"
 Map="res://scenes/map.tscn"
+HamsterData="*res://singletons/hamster_data.gd"
+
+[display]
+
+window/size/viewport_width=1440
+window/size/viewport_height=1024
+window/size/window_width_override=720
+window/size/window_height_override=512
+window/stretch/mode="canvas_items"
 
 [dotnet]
 

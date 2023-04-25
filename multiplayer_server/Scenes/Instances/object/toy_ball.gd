@@ -13,3 +13,4 @@ func _physics_process(delta):
 	var coll_info = move_and_collide(velocity * 12 * delta)
 	if coll_info:
 		velocity = velocity.bounce(coll_info.get_normal())
+		force = velocity

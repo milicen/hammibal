@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2s3yqtogligs"]
+
+[ext_resource type="Texture2D" uid="uid://dnew71i8bbuxq" path="res://assets/ui/bg_grid.png" id="1_qcvyh"]
+
+[node name="Map" type="TextureRect"]
+modulate = Color(1, 1, 1, 0.34902)
+z_index = -2
+z_as_relative = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2335.0
+offset_top = -1661.0
+offset_right = 2337.0
+offset_bottom = 1661.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_qcvyh")
