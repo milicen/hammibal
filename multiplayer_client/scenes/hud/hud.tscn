@@ -1,0 +1,114 @@
+[gd_scene load_steps=7 format=3 uid="uid://duaratvb8nkpr"]
+
+[ext_resource type="Script" path="res://scenes/hud/hud.gd" id="1_jqoye"]
+[ext_resource type="Theme" uid="uid://b0xtrucce6h42" path="res://themes/main_theme.tres" id="1_qf402"]
+[ext_resource type="Texture2D" uid="uid://c3avqo7ldsy5l" path="res://assets/hamster_profiles/profile--campbell.png" id="2_c20fp"]
+[ext_resource type="Texture2D" uid="uid://c2dapmq0fijxb" path="res://assets/food/poop.png" id="3_ni6ow"]
+[ext_resource type="Texture2D" uid="uid://dhwo340tos2mn" path="res://assets/food/sunflower seed.png" id="4_xnuy0"]
+[ext_resource type="PackedScene" uid="uid://dldmss4maurpt" path="res://scenes/hud/team_profile_small.tscn" id="5_x1py3"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_jqoye")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_qf402")
+
+[node name="PlayerInfo" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="PlayerData" type="HBoxContainer" parent="MarginContainer/PlayerInfo"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Profile" type="TextureRect" parent="MarginContainer/PlayerInfo/PlayerData"]
+layout_mode = 2
+texture = ExtResource("2_c20fp")
+
+[node name="Gauges" type="VBoxContainer" parent="MarginContainer/PlayerInfo/PlayerData"]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="PoopGauge" type="Control" parent="MarginContainer/PlayerInfo/PlayerData/Gauges"]
+custom_minimum_size = Vector2(160, 53)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/PlayerInfo/PlayerData/Gauges/PoopGauge"]
+layout_mode = 2
+offset_right = 160.0
+offset_bottom = 53.0
+
+[node name="Label" type="Label" parent="MarginContainer/PlayerInfo/PlayerData/Gauges/PoopGauge/PanelContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PlayerInfo/PlayerData/Gauges/PoopGauge"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -52.0
+offset_top = -60.5
+offset_right = 69.0
+offset_bottom = 60.5
+grow_vertical = 2
+texture = ExtResource("3_ni6ow")
+stretch_mode = 4
+
+[node name="NutGauge" type="Control" parent="MarginContainer/PlayerInfo/PlayerData/Gauges"]
+custom_minimum_size = Vector2(160, 53)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/PlayerInfo/PlayerData/Gauges/NutGauge"]
+layout_mode = 2
+offset_right = 160.0
+offset_bottom = 53.0
+
+[node name="Label" type="Label" parent="MarginContainer/PlayerInfo/PlayerData/Gauges/NutGauge/PanelContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PlayerInfo/PlayerData/Gauges/NutGauge"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -45.0
+offset_right = 50.0
+offset_bottom = 45.0
+grow_vertical = 2
+rotation = -0.270526
+pivot_offset = Vector2(45, 45)
+texture = ExtResource("4_xnuy0")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="TeamData" type="HBoxContainer" parent="MarginContainer/PlayerInfo"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TeamProfileSmall" parent="MarginContainer/PlayerInfo/TeamData" instance=ExtResource("5_x1py3")]
+layout_mode = 2
+
+[node name="TeamProfileSmall2" parent="MarginContainer/PlayerInfo/TeamData" instance=ExtResource("5_x1py3")]
+layout_mode = 2
+
+[node name="TeamProfileSmall3" parent="MarginContainer/PlayerInfo/TeamData" instance=ExtResource("5_x1py3")]
+layout_mode = 2
+
+[node name="TeamProfileSmall4" parent="MarginContainer/PlayerInfo/TeamData" instance=ExtResource("5_x1py3")]
+layout_mode = 2

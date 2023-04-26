@@ -1,13 +1,14 @@
 extends HBoxContainer
 
-var index = 0
+var index: = 0
 var data
 
 @onready var hamster_profile = $HamsterProfile
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	data = HamsterData.hamsters[index]
+	set_hamster_profile(data)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

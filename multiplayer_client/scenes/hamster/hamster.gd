@@ -1,6 +1,9 @@
 extends CharacterBody2D
 class_name Hamster
 
+signal poop_count_changed(count)
+signal nut_count_changed(count)
+
 # movement vars
 var speed := 300.0
 var accel := 0.0
@@ -9,9 +12,15 @@ const TRESHOLD = 50.0
 var controlling := true
 
 # ability vars
-@export var poop_count := 100
-@export var nut_count := 100
-@export var nut_mod := 0
+@export var poop_count := 0:
+	set(value):
+		poop_count = value
+		emit_signal('poop_count_changed', poop_count)
+@export var nut_count := 0:
+	set(value):
+		nut_count = value
+		emit_signal('nut_count_changed', nut_count)
+
 
 # mass vars
 var mass = 1
@@ -24,6 +33,10 @@ var poison_shrink_rate = 0.01
 #var sun_seed_scene: PackedScene = preload("res://objects/consumables/sun_seed.tscn")
 #var pumpkin_seed_scene: PackedScene = preload("res://objects/consumables/pumpkin_seed.tscn")
 
+@export var username: String
+@export var hamster_index: int
+
+@onready var name_label = $Label
 @onready var sprite = $Sprite2D
 @onready var camera = $Camera2D
 
@@ -35,8 +48,15 @@ func _enter_tree():
 func _ready():
 #	syncer.set_multiplayer_authority(str(name).to_int())
 	camera.enabled = is_multiplayer_authority()
+	
+	if not is_multiplayer_authority():
+		await syncer.synchronized
+		print('not user')
+		display_hamster()
 
 func _physics_process(delta):
+	name_label.rotation = -rotation
+	
 	if not is_multiplayer_authority(): return
 	
 	var direction = get_mouse_dir()
@@ -52,6 +72,7 @@ func _physics_process(delta):
 		velocity = lerp(velocity, Vector2.ZERO, 0.1)
 
 	rotation = velocity.angle()
+#	name_label.rotation = -rotation
 	# if colliding with somwthing
 	if move_and_slide():
 		var coll = get_last_slide_collision()
@@ -69,12 +90,12 @@ func _unhandled_input(event):
 	
 	if not event is InputEventMouseButton: return
 	
-	if event.is_action_pressed("poop_attack"):
+	if event.is_action_pressed("poop_attack") and poop_count > 0:
 		var direction = Vector2.RIGHT.rotated(rotation) * -Vector2.ONE
 		accel = 0.2
 		Game.request_poop_attack(global_position, direction, get_multiplayer_authority())
 	
-	if event.is_action_pressed("spit_nut"):
+	if event.is_action_pressed("spit_nut") and nut_count > 0:
 		var direction = Vector2.RIGHT.rotated(rotation)
 		Game.request_spit_nut(global_position, direction, get_multiplayer_authority())
   
@@ -86,6 +107,17 @@ func _notification(what):
 		NOTIFICATION_WM_MOUSE_EXIT:
 			controlling = false
 
+
+func set_hamster(username, hamster_index):
+	self.username = username
+	self.hamster_index = hamster_index
+	display_hamster()
+	
+
+func display_hamster():
+	name_label.text = username
+	sprite.texture = HamsterData.hamsters[hamster_index].hamster_default
+	
 
 func get_mouse_dir() -> Vector2:
 	if !controlling: return Vector2.ZERO
@@ -133,7 +165,7 @@ func calculate_mass_release(consumable):
 		poop_count -= 1
 	else:
 		mass -= consumable.mass
-		nut_count += 1
+		nut_count -= 1
 
 	tween_scale()
 
@@ -147,7 +179,5 @@ func tween_scale():
 	tween.tween_property(self, "scale", final_scale, 0.3)
 
 
-
-
-
-
+func _on_timer_timeout():
+	poop_count += 1

@@ -3,10 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://d1yicv28rkhri" path="res://scenes/consumables/consumable.tscn" id="1_pn78g"]
 [ext_resource type="Texture2D" uid="uid://c44q1bllhyqre" path="res://assets/food/pumpkin seed.png" id="2_pe7xj"]
 
-[node name="PumpkinSeed" instance=ExtResource("1_pn78g")]
-consumable_name = "pumpkin_seed"
+[node name="PumpkinSeed" groups=["nut"] instance=ExtResource("1_pn78g")]
 mass = 0.2
-is_ability = true
+consumable_name = "pumpkin_seed"
 
 [node name="Sprite2D" parent="." index="0"]
 position = Vector2(0, -7)

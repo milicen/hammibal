@@ -1,9 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0ka64wl2bfvb"]
+[gd_scene load_steps=3 format=3 uid="uid://c0ka64wl2bfvb"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_dfyi5"]
+[ext_resource type="PackedScene" uid="uid://duaratvb8nkpr" path="res://scenes/hud/hud.tscn" id="2_bopk3"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_dfyi5")
+
+[node name="HUD" parent="." instance=ExtResource("2_bopk3")]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/hamster/hamster.tscn")

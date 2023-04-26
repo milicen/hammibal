@@ -3,7 +3,7 @@
 [ext_resource type="Material" uid="uid://raa0lacmje42" path="res://shaders/team_container.tres" id="1_7xkuo"]
 [ext_resource type="Texture2D" uid="uid://cbh7qht5miy0i" path="res://assets/ui/profile_empty.png" id="2_vxse7"]
 
-[node name="TeamProfile" type="VSplitContainer"]
+[node name="TeamProfileSmall" type="VSplitContainer"]
 collapsed = true
 dragger_visibility = 1
 

@@ -21,6 +21,7 @@ Server="*res://singletons/server.gd"
 Game="*res://singletons/game.gd"
 Map="res://scenes/map.tscn"
 HamsterData="*res://singletons/hamster_data.gd"
+PlayerData="*res://singletons/player_data.gd"
 
 [display]
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://kf3lig7i8fek"]
+[gd_scene load_steps=7 format=3 uid="uid://kf3lig7i8fek"]
 
 [ext_resource type="Texture2D" uid="uid://dgxcrfcsmqgjy" path="res://assets/hamsters/camp/default.png" id="1_4mus1"]
 [ext_resource type="Script" path="res://scenes/hamster/hamster.gd" id="1_r7tvw"]
+[ext_resource type="Theme" uid="uid://b0xtrucce6h42" path="res://themes/main_theme.tres" id="3_em5rp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_owmnh"]
 radius = 67.0075
@@ -19,6 +20,12 @@ properties/1/sync = true
 properties/2/path = NodePath(".:scale")
 properties/2/spawn = true
 properties/2/sync = true
+properties/3/path = NodePath(".:username")
+properties/3/spawn = true
+properties/3/sync = true
+properties/4/path = NodePath(".:hamster_index")
+properties/4/spawn = true
+properties/4/sync = true
 
 [node name="Hamster" type="CharacterBody2D"]
 collision_layer = 2
@@ -55,5 +62,31 @@ shape = SubResource("CircleShape2D_p7tli")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_xysxv")
 
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -11.0
+offset_right = 32.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(20, 12)
+theme = ExtResource("3_em5rp")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+text = "hello"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
 [connection signal="area_entered" from="PickupArea" to="." method="_on_pickup_area_area_entered"]
 [connection signal="body_entered" from="PreyArea" to="." method="_on_prey_area_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

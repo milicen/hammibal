@@ -1,7 +1,9 @@
 extends CanvasLayer
 
 
-@onready var player_info = $%PlayerInfo
+#@onready var player_info = $%PlayerInfo
+@onready var hamster_select = $CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect
+@onready var input_name = $CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer/LineEdit
 @onready var game_mode_info = $%GameModeInfo
 @onready var team_container = $%TeamContainer
 
@@ -31,6 +33,8 @@ func _on_game_mode_info_select_mode(mode):
 
 
 func _on_inputs_join_game(host_type):
+	PlayerData.username = input_name.text
+	PlayerData.chosen_hamster_index = hamster_select.index
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
 #	Server.connect_to_server()
 

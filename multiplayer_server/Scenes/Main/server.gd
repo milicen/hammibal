@@ -11,6 +11,8 @@ var max_players = 100
 @onready var player = preload("res://Scenes/Instances/player.tscn")
 @onready var toy_ball = preload("res://Scenes/Instances/object/toy_ball.tscn")
 
+#var players = {}
+
 func _ready():
 	start_server()
 
@@ -49,11 +51,19 @@ func disconnect_from_server(peer_id):
 	network.disconnect_peer(peer_id)
 
 @rpc("any_peer")
-func add_player(id):
+func add_player(id, data):
 	var p = player.instantiate()
 	p.name = str(id)
+	p.username = data.username
+	p.hamster_index = data.hamster_index
 	get_node("/root/Main").add_child(p)
-	rpc('add_player', id)
+	print(p.username)
+	print(p.hamster_index)
+#	players[str(id)] = {
+#		'username': data.username,
+#		'hamster_index': data.hamster_index
+#	}
+	rpc('add_player', id, data)
 
 @rpc("any_peer")
 func process_existing_consumables(id):

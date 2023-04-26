@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://dldmss4maurpt"]
+
+[ext_resource type="Material" uid="uid://raa0lacmje42" path="res://shaders/team_container.tres" id="1_n1vi4"]
+[ext_resource type="Texture2D" uid="uid://cbh7qht5miy0i" path="res://assets/ui/profile_empty.png" id="2_6g3ix"]
+
+[node name="TeamProfileSmall" type="VBoxContainer"]
+theme_override_constants/separation = 4
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = ExtResource("1_n1vi4")
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+texture = ExtResource("2_6g3ix")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "???"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3

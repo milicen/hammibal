@@ -1,6 +1,8 @@
 extends Node2D
 
-@onready var syncer = $MultiplayerSynchronizer
+
+@export var username: String
+@export var hamster_index: int
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())

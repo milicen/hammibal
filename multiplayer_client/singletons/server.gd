@@ -21,7 +21,11 @@ func connect_to_server():
 	multiplayer.connected_to_server.connect(
 		func():
 			print('connected to server ')
-			rpc_id(1, 'add_player', multiplayer.get_unique_id())
+			var player_data = {
+				'username': PlayerData.username,
+				'hamster_index': PlayerData.chosen_hamster_index
+			}
+			rpc_id(1, 'add_player', multiplayer.get_unique_id(), player_data)
 			request_existing_consumables(multiplayer.get_unique_id())
 			request_existing_toy_ball(multiplayer.get_unique_id())
 	)
@@ -40,11 +44,22 @@ func disconnect_from_server(peer_id):
 
 
 @rpc("any_peer")
-func add_player(id):
-	if multiplayer.get_unique_id() != id and !get_node("/root/Main/%s" % str(id)):
-		var p = player.instantiate()
-		p.name = str(id)
-		get_node("/root/Main").add_child(p)
+func add_player(id, data):
+#	if multiplayer.get_unique_id() != id and !get_node("/root/Main/%s" % str(id)):
+#		var p = player.instantiate()
+#		p.name = str(id)
+#		get_node("/root/Main").add_child(p)
+#		p.set_hamster(data.username, data.hamster_index)
+	
+	var p = get_node_or_null("/root/Main/%s" % str(id))
+	print_debug(data)
+	if p:
+		p.set_hamster(data.username, data.hamster_index)
+		
+	if multiplayer.get_unique_id() == id:
+		
+		p.connect('poop_count_changed', get_node("/root/Main/HUD").on_Player_poop_count_changed)
+		p.connect('nut_count_changed', get_node("/root/Main/HUD").on_Player_nut_count_changed)
 
 func request_existing_consumables(id):
 	rpc_id(1, 'process_existing_consumables', id)
@@ -52,7 +67,6 @@ func request_existing_consumables(id):
 @rpc("any_peer")
 func add_existing_consumables(consumables):
 	for num in consumables.size():
-		print(consumables[num])
 		Game.instance_consumable(consumables[num])
 	
 
