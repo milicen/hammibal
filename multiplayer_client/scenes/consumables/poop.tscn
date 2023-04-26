@@ -3,10 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://d1yicv28rkhri" path="res://scenes/consumables/consumable.tscn" id="1_tc6vq"]
 [ext_resource type="Texture2D" uid="uid://c2dapmq0fijxb" path="res://assets/food/poop.png" id="2_hn5rc"]
 
-[node name="Poop" instance=ExtResource("1_tc6vq")]
-consumable_name = "poop"
+[node name="Poop" groups=["poop"] instance=ExtResource("1_tc6vq")]
 mass = -20.0
-is_ability = true
+consumable_name = "poop"
 
 [node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("2_hn5rc")

@@ -142,13 +142,15 @@ func _on_prey_area_body_entered(body: Hamster):
 
 func freeze_hamster():
 	set_physics_process(false)
-	sprite.hide()
+#	sprite.hide()
+	sprite.texture = HamsterData.hamsters[hamster_index].hamster_died
 	$CollisionShape2D.disabled = true
 	$PickupArea/CollisionShape2D.disabled = true
 	$PreyArea/CollisionShape2D.disabled = true
+	$Timer.stop()
 
 func calculate_mass_eat(consumable):
-	if consumable.consumable_name == 'poop':
+	if consumable.is_in_group('poop'):
 		mass += mass * consumable.mass / 100
 	else:
 		mass += consumable.mass
@@ -160,7 +162,7 @@ func calculate_mass_eat(consumable):
 
 func calculate_mass_release(consumable):
 	print('mass release ', consumable.mass)
-	if consumable.consumable_name == 'poop':
+	if consumable.is_in_group('poop'):
 		mass += mass * consumable.mass / 100
 		poop_count -= 1
 	else:

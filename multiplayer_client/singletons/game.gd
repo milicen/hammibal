@@ -134,12 +134,11 @@ func receive_hunt_hamster(hunter, prey):
 	
 	if prey == multiplayer.get_unique_id():
 #		get_tree().quit()
+		await get_tree().create_timer(1.0).timeout
 		var panel = end_game_panel.instantiate()
 		get_node("/root").add_child(panel)
 		return
-	
-#	if p_hamster:
-#		p_hamster.queue_free()
+
 
 func request_kill_hamster(hamster_name):
 	rpc_id(1, 'process_kill_hamster', hamster_name)
@@ -151,6 +150,7 @@ func receive_kill_hamster(hamster_name):
 	
 	if str(hamster_name).to_int() == multiplayer.get_unique_id():
 #		get_tree().quit()
+		await get_tree().create_timer(1.0).timeout
 		var panel = end_game_panel.instantiate()
 		get_node("/root").add_child(panel)
 		return

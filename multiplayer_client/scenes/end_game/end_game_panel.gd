@@ -1,6 +1,9 @@
 extends CanvasLayer
 
+@onready var profile = $ColorRect/EndGameInfo/MarginContainer/VBoxContainer/HamsterProfile 
 
+func _ready():
+	profile.texture = HamsterData.hamsters[PlayerData.chosen_hamster_index].hamster_ghost
 
 
 func _on_return_home_button_pressed():
