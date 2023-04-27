@@ -42,6 +42,8 @@ var poison_shrink_rate = 0.01
 
 @onready var syncer = $MultiplayerSynchronizer
 
+var blood_splat_scene = preload("res://scenes/objects/blood_splat.tscn")
+
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
 
@@ -191,6 +193,8 @@ func poisoned():
 
 func died():
 	$Die.play()
+	var blood = blood_splat_scene.instantiate()
+	add_child(blood)
 	# splat blood
 
 func tween_scale():
