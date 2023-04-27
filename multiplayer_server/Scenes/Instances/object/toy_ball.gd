@@ -14,3 +14,4 @@ func _physics_process(delta):
 	if coll_info:
 		velocity = velocity.bounce(coll_info.get_normal())
 		force = velocity
+	rotation += velocity.length() * delta / 10
