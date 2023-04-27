@@ -9,9 +9,11 @@ func play(reversed:= false):
 
 
 func _on_create_team_button_pressed():
+	AudioManager.play_btn()
 	pass # Replace with function body.
 
 
 func _on_join_team_button_pressed():
+	AudioManager.play_btn()
 	$%JoinTeamPopup.show()
 	pass # Replace with function body.

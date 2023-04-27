@@ -31,7 +31,9 @@ func _ready():
 	game_mode = 'solo'
 
 func _on_solo_button_pressed():
+	AudioManager.play_btn()
 	game_mode = 'solo'
 
 func _on_team_button_pressed():
+	AudioManager.play_btn()
 	game_mode = 'team'

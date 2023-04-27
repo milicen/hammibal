@@ -1,8 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://kf3lig7i8fek"]
+[gd_scene load_steps=13 format=3 uid="uid://kf3lig7i8fek"]
 
 [ext_resource type="Texture2D" uid="uid://dgxcrfcsmqgjy" path="res://assets/hamsters/camp/default.png" id="1_4mus1"]
 [ext_resource type="Script" path="res://scenes/hamster/hamster.gd" id="1_r7tvw"]
 [ext_resource type="Theme" uid="uid://b0xtrucce6h42" path="res://themes/main_theme.tres" id="3_em5rp"]
+[ext_resource type="PackedScene" uid="uid://bgt74oxjawrty" path="res://scenes/objects/audio_2d.tscn" id="4_s0jxm"]
+[ext_resource type="AudioStream" uid="uid://u60gsxsyraw4" path="res://assets/sounds/sfx/spit.ogg" id="5_pdmtc"]
+[ext_resource type="AudioStream" uid="uid://vjcnyfcpmcdb" path="res://assets/sounds/sfx/poop1.ogg" id="6_nrsf0"]
+[ext_resource type="AudioStream" uid="uid://bg7hksx72wn2j" path="res://assets/sounds/sfx/smallmunch2.ogg" id="7_jhbci"]
+[ext_resource type="AudioStream" uid="uid://c18sqpi1xlt8q" path="res://assets/sounds/sfx/hurt2.ogg" id="8_lvaax"]
+[ext_resource type="AudioStream" uid="uid://cq3viuie8nj" path="res://assets/sounds/sfx/death2.ogg" id="9_xasqo"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_owmnh"]
 radius = 67.0075
@@ -87,6 +93,48 @@ autowrap_mode = 1
 wait_time = 10.0
 autostart = true
 
+[node name="Squeak" parent="." instance=ExtResource("4_s0jxm")]
+
+[node name="Spit" parent="." instance=ExtResource("4_s0jxm")]
+stream = ExtResource("5_pdmtc")
+volume_db = 4.0
+
+[node name="Timer" parent="Spit" index="0"]
+autostart = false
+
+[node name="Poop" parent="." instance=ExtResource("4_s0jxm")]
+stream = ExtResource("6_nrsf0")
+volume_db = 0.0
+
+[node name="Timer" parent="Poop" index="0"]
+autostart = false
+
+[node name="Eat" parent="." instance=ExtResource("4_s0jxm")]
+stream = ExtResource("7_jhbci")
+volume_db = 4.0
+
+[node name="Timer" parent="Eat" index="0"]
+autostart = false
+
+[node name="Poison" parent="." instance=ExtResource("4_s0jxm")]
+stream = ExtResource("8_lvaax")
+volume_db = -3.0
+
+[node name="Timer" parent="Poison" index="0"]
+autostart = false
+
+[node name="Die" parent="." instance=ExtResource("4_s0jxm")]
+stream = ExtResource("9_xasqo")
+
+[node name="Timer" parent="Die" index="0"]
+autostart = false
+
 [connection signal="area_entered" from="PickupArea" to="." method="_on_pickup_area_area_entered"]
 [connection signal="body_entered" from="PreyArea" to="." method="_on_prey_area_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+
+[editable path="Spit"]
+[editable path="Poop"]
+[editable path="Eat"]
+[editable path="Poison"]
+[editable path="Die"]

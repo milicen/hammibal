@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dekoqh8db3wml"]
+
+[ext_resource type="AudioStream" uid="uid://drlhpu7u3e8kh" path="res://assets/sounds/Main Theme.ogg" id="1_epyb7"]
+[ext_resource type="Script" path="res://singletons/audio_manager.gd" id="1_gabw7"]
+[ext_resource type="AudioStream" uid="uid://ck82unfexrri6" path="res://assets/sounds/sfx/pop2.ogg" id="3_2tkw0"]
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1_gabw7")
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_epyb7")
+autoplay = true
+
+[node name="BtnClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_2tkw0")
+volume_db = -2.0

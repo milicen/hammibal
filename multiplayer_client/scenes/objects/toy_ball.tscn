@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://t026wbwt2jhx"]
+[gd_scene load_steps=7 format=3 uid="uid://t026wbwt2jhx"]
 
 [ext_resource type="Script" path="res://scenes/objects/toy_ball.gd" id="1_81s8i"]
 [ext_resource type="Texture2D" uid="uid://dsaxvmylco87s" path="res://assets/food/toy ball.png" id="1_uiyal"]
+[ext_resource type="PackedScene" uid="uid://bgt74oxjawrty" path="res://scenes/objects/audio_2d.tscn" id="3_87st3"]
+[ext_resource type="AudioStream" uid="uid://d1gvj5wacslud" path="res://assets/sounds/sfx/toy_ball_squish.ogg" id="4_v2jg0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8mh5g"]
 radius = 73.2462
@@ -42,4 +44,13 @@ shape = SubResource("CircleShape2D_8mh5g")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_dju1c")
 
+[node name="Squish" parent="." instance=ExtResource("3_87st3")]
+stream = ExtResource("4_v2jg0")
+volume_db = 0.0
+
+[node name="Timer" parent="Squish" index="0"]
+autostart = false
+
 [connection signal="body_entered" from="HamsterArea" to="." method="_on_hamster_area_body_entered"]
+
+[editable path="Squish"]

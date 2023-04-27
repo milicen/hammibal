@@ -39,6 +39,7 @@ func toggle_join_btn(disabled:bool):
 
 
 func _on_join_btn_pressed():
+	AudioManager.play_btn()
 	if is_popup:
 		root.hide()
 		return

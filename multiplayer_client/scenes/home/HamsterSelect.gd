@@ -17,12 +17,14 @@ func _process(delta):
 
 
 func _on_left_button_pressed():
+	AudioManager.play_btn()
 	index = (index - 1) % HamsterData.hamsters.size()
 	data = HamsterData.hamsters[index]
 	set_hamster_profile(data)
 
 
 func _on_right_button_pressed():
+	AudioManager.play_btn()
 	index = (index + 1) % HamsterData.hamsters.size()
 	data = HamsterData.hamsters[index]
 	set_hamster_profile(data)

@@ -94,10 +94,12 @@ func _unhandled_input(event):
 		var direction = Vector2.RIGHT.rotated(rotation) * -Vector2.ONE
 		accel = 0.2
 		Game.request_poop_attack(global_position, direction, get_multiplayer_authority())
+		$Poop.play()
 	
 	if event.is_action_pressed("spit_nut") and nut_count > 0:
 		var direction = Vector2.RIGHT.rotated(rotation)
 		Game.request_spit_nut(global_position, direction, get_multiplayer_authority())
+		$Spit.play()
   
 
 func _notification(what):
@@ -129,6 +131,8 @@ func _on_pickup_area_area_entered(area:Consumable):
 	if area.spitter == get_multiplayer_authority(): return
 	if is_multiplayer_authority():
 		Game.request_despawn_pickup(area.name, get_multiplayer_authority())
+		$Eat.play()
+
 
 func _on_prey_area_body_entered(body: Hamster):
 	if body.name == self.name: return
@@ -141,6 +145,7 @@ func _on_prey_area_body_entered(body: Hamster):
 		Game.request_hunt_hamster(str(body.name).to_int(), str(self.name).to_int())
 
 func freeze_hamster():
+	died()
 	set_physics_process(false)
 #	sprite.hide()
 	sprite.texture = HamsterData.hamsters[hamster_index].hamster_died
@@ -152,6 +157,7 @@ func freeze_hamster():
 func calculate_mass_eat(consumable):
 	if consumable.is_in_group('poop'):
 		mass += mass * consumable.mass / 100
+		poisoned()
 	else:
 		mass += consumable.mass
 
@@ -174,6 +180,18 @@ func calculate_mass_release(consumable):
 func add_mass(num):
 	mass += num
 	tween_scale()
+	
+func poisoned():
+	$Poison.play()
+	var tween = create_tween()
+	tween.tween_property(sprite, 'modulate', Color(0.85, 0.66, 1, 1), 0.2)
+	tween.tween_property(sprite, 'modulate', Color(1, 1, 1, 1), 0.2)
+	tween.tween_property(sprite, 'modulate', Color(0.85, 0.66, 1, 1), 0.2)
+	tween.tween_property(sprite, 'modulate', Color(1, 1, 1, 1), 0.2)
+
+func died():
+	$Die.play()
+	# splat blood
 
 func tween_scale():
 	var tween = create_tween().set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)

@@ -28,4 +28,5 @@ func _physics_process(delta):
 
 
 func _on_hamster_area_body_entered(body):
+	$Squish.play()
 	Game.request_kill_hamster(body.name)
