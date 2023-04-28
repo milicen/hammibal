@@ -8,6 +8,14 @@ script = ExtResource("1_dfyi5")
 
 [node name="HUD" parent="." instance=ExtResource("2_bopk3")]
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/hamster/hamster.tscn")
 spawn_path = NodePath("..")
+
+[node name="PlayerOrderTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="despawned" from="PlayerSpawner" to="." method="_on_player_spawner_despawned"]
+[connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
+[connection signal="timeout" from="PlayerOrderTimer" to="." method="_on_player_order_timer_timeout"]
