@@ -6,7 +6,6 @@
 [node name="BloodSplat" type="CPUParticles2D"]
 z_index = -2
 z_as_relative = false
-emitting = false
 amount = 48
 lifetime = 0.2
 explosiveness = 1.0

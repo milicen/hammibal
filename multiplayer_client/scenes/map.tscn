@@ -9,7 +9,7 @@ size = Vector2(136, 3821)
 size = Vector2(5603, 180.5)
 
 [node name="Map" type="TextureRect"]
-z_index = -2
+z_index = -10
 z_as_relative = false
 anchors_preset = 15
 anchor_right = 1.0
