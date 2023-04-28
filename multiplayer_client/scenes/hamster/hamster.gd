@@ -6,6 +6,8 @@ signal nut_count_changed(count)
 
 # movement vars
 var speed := 300.0
+var max_speed := 300.0
+var min_speed := 100.0
 var accel := 0.0
 @export var max_accel := 0.18
 const TRESHOLD = 50.0
@@ -58,6 +60,8 @@ func _ready():
 
 func _physics_process(delta):
 	name_label.rotation = -rotation
+	speed = clamp(min_speed, -mass+max_speed+100, max_speed)
+	print('speed: %s    mass: %s' %[speed, mass])
 	
 	if not is_multiplayer_authority(): return
 	
