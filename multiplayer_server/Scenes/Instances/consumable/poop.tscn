@@ -3,3 +3,4 @@
 [ext_resource type="PackedScene" uid="uid://cohmtseoj4a51" path="res://Scenes/Instances/consumable/consumable.tscn" id="1_ikkcm"]
 
 [node name="Poop" instance=ExtResource("1_ikkcm")]
+mass = -5.0

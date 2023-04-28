@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d2nv2kaodub8a" path="res://assets/food/fetus.png" id="2_okc60"]
 
 [node name="Fetus" instance=ExtResource("1_8lcch")]
+mass = 1.6
 
 [node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("2_okc60")

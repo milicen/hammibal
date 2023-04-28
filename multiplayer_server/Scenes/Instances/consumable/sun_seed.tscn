@@ -3,3 +3,4 @@
 [ext_resource type="PackedScene" uid="uid://cohmtseoj4a51" path="res://Scenes/Instances/consumable/consumable.tscn" id="1_ge7u2"]
 
 [node name="SunSeed" instance=ExtResource("1_ge7u2")]
+mass = 0.2

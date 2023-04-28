@@ -23,7 +23,7 @@ var controlling := true
 
 
 # mass vars
-var mass = 1
+var mass = 100
 var growth_rate = 0.2
 var shrink_rate = 0.001
 var poison_shrink_rate = 0.01
@@ -159,6 +159,7 @@ func freeze_hamster():
 func calculate_mass_eat(consumable):
 	if consumable.is_in_group('poop'):
 		mass += mass * consumable.mass / 100
+		print_debug(consumable.mass)
 		poisoned()
 	else:
 		mass += consumable.mass
@@ -180,8 +181,10 @@ func calculate_mass_release(consumable):
 	tween_scale()
 
 func add_mass(num):
-	mass += num
+	mass += num / 5
 	tween_scale()
+	print('mass: ', mass)
+	print('scale: ', scale)
 	
 func poisoned():
 	$Poison.play()
@@ -199,7 +202,8 @@ func died():
 
 func tween_scale():
 	var tween = create_tween().set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-	var final_scale = Vector2.ONE * (mass ** growth_rate)
+#	var final_scale = Vector2.ONE * (mass ** growth_rate)
+	var final_scale = Vector2.ONE * (mass / 100)
 	tween.tween_property(self, "scale", final_scale, 0.3)
 
 

@@ -3,3 +3,4 @@
 [ext_resource type="PackedScene" uid="uid://cohmtseoj4a51" path="res://Scenes/Instances/consumable/consumable.tscn" id="1_dagcl"]
 
 [node name="Fetus" instance=ExtResource("1_dagcl")]
+mass = 1.6
