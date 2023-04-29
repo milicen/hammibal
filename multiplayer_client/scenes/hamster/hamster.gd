@@ -50,7 +50,6 @@ func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
 
 func _ready():
-#	syncer.set_multiplayer_authority(str(name).to_int())
 	camera.enabled = is_multiplayer_authority()
 	
 	if not is_multiplayer_authority():
@@ -61,7 +60,9 @@ func _ready():
 func _physics_process(delta):
 	name_label.rotation = -rotation
 	speed = clamp(min_speed, -mass+max_speed+100, max_speed)
-#	print('speed: %s    mass: %s' %[speed, mass])
+	mass -= delta * mass/300
+	scale = Vector2.ONE * (mass/100)
+	print('speed: %s    mass: %s' %[speed, mass])
 	
 	if not is_multiplayer_authority(): return
 	
