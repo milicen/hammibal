@@ -24,37 +24,6 @@ var end_game_panel = preload("res://scenes/end_game/end_game_panel.tscn")
 func is_main_null():
 	return get_node_or_null("/root/Main") == null
 
-func instance_consumable(data: Dictionary):
-	var c_name = str(data.name).to_snake_case()
-	if c_name.contains('poop'):
-		var poop:Consumable = poop_scene.instantiate()
-		poop.name = str(data.name)
-		poop.scale = data.scale
-		poop.position = data.position
-		poop.rotation = data.rotation
-		poop.mass = data.mass
-		if is_main_null(): return
-		get_node_or_null("/root/Main").add_child(poop)
-	
-	if c_name.contains('sun'):
-		var sun_seed:Consumable = sun_seed_scene.instantiate()
-		sun_seed.name = str(data.name)
-		sun_seed.scale = data.scale
-		sun_seed.position = data.position
-		sun_seed.rotation = data.rotation
-		sun_seed.mass = data.mass
-		if is_main_null(): return
-		get_node_or_null("/root/Main").add_child(sun_seed)
-	
-	if c_name.contains('pumpkin'):
-		var pumpkin_seed:Consumable = pumpkin_seed_scene.instantiate()
-		pumpkin_seed.name = str(data.name)
-		pumpkin_seed.scale = data.scale
-		pumpkin_seed.position = data.position
-		pumpkin_seed.rotation = data.rotation
-		pumpkin_seed.mass = data.mass
-		if is_main_null(): return
-		get_node_or_null("/root/Main").add_child(pumpkin_seed)
 
 func instance_toy_ball(data: Dictionary):
 	var tb = toy_ball.instantiate()
@@ -70,27 +39,13 @@ func move_toy_ball(ball_name, force):
 	ball.force = force
 #	ball.set_velocity(force)
 
-@rpc("any_peer")
-func spawn_consumable(pos, size, rot, con_name, type):
-	var consumable = consumables[type].instantiate()
-	consumable.init(-1, pos, Vector2.ZERO, size, rot)
-	consumable.name = con_name
-	if is_main_null(): return
-	get_node_or_null("/root/Main").add_child(consumable)
 
 func request_poop_attack(position, direction, requester_id):
 	rpc_id(1, 'process_poop_attack', position, direction, requester_id)
 
 @rpc("any_peer")
-func receive_poop_attack(position, direction, size, rotation, consumable_name, requester_id):
-	var poop:Consumable = poop_scene.instantiate()
-	poop.init(requester_id, position, direction, size, rotation)
-#	poop.set_multiplayer_authority(requester_id)
-#	print('poop is ability: ', poop.is_ability)
-	poop.name = consumable_name
-	if is_main_null(): return
-	get_node_or_null("/root/Main").add_child(poop)
-	
+func receive_poop_attack(consumable_name, requester_id):
+	var poop = get_node("/root/Main/%s" % consumable_name)
 	var requester = get_node("/root/Main/%s" % str(requester_id))
 	requester.calculate_mass_release(poop)
 
@@ -98,28 +53,14 @@ func request_spit_nut(position, direction, requester_id):
 	rpc_id(1, 'process_spit_nut', position, direction, requester_id)
 
 @rpc("any_peer")
-func receive_spit_nut(position, direction, size, rotation, consumable_name, requester_id):
-	var lc_name = str(consumable_name).to_snake_case()
-	var nut = sun_seed_scene.instantiate() if lc_name.contains('sun') else pumpkin_seed_scene.instantiate()
-	nut.init(requester_id, position, direction, size, rotation)
-#	nut.set_multiplayer_authority(requester_id)
-	nut.name = consumable_name
-	if is_main_null(): return
-	get_node('/root/Main').add_child(nut)
-	
+func receive_spit_nut(consumable_name, requester_id):
+	var nut = get_node("/root/Main/%s" % consumable_name)
 	var requester = get_node("/root/Main/%s" % str(requester_id))
 	requester.calculate_mass_release(nut)
 
 func request_despawn_pickup(pickup_name, requester_id):
 	rpc_id(1, 'process_despawn_pickup', pickup_name, requester_id)
 
-@rpc("any_peer")
-func receive_despawn_pickup(pickup_name, requester_id):
-	var pickup: Consumable = get_node_or_null('/root/Main/%s' % str(pickup_name))
-	var requester = get_node('/root/Main/%s' % str(requester_id))
-	requester.calculate_mass_eat(pickup)
-	pickup.despawn()
-		
 
 func request_hunt_hamster(hunter, prey):
 	var p_hamster = get_node_or_null("/root/Main/%s" % str(prey))

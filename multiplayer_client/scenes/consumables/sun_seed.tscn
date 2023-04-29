@@ -5,7 +5,6 @@
 
 [node name="SunSeed" groups=["nut"] instance=ExtResource("1_ekysj")]
 mass = 0.2
-consumable_name = "sun_seed"
 
 [node name="Sprite2D" parent="." index="0"]
 position = Vector2(0, -5)

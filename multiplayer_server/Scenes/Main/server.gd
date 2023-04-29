@@ -59,26 +59,7 @@ func add_player(id, data):
 	get_node("/root/Main").add_child(p)
 	print(p.username)
 	print(p.hamster_index)
-#	players[str(id)] = {
-#		'username': data.username,
-#		'hamster_index': data.hamster_index
-#	}
 	rpc('add_player', id, data)
-
-@rpc("any_peer")
-func process_existing_consumables(id):
-	var consumables = get_tree().get_nodes_in_group('consumable')
-	var arr = []
-	for c in consumables:
-		var data = {
-			'name': c.name,
-			'position': c.global_position,
-			'rotation': c.rotation,
-			'scale': c.scale,
-			'mass': c.mass
-		}
-		arr.append(data)
-	rpc_id(id, 'add_existing_consumables', arr)
 
 
 @rpc("any_peer")
@@ -96,8 +77,5 @@ func process_existing_toy_ball(id):
 
 
 # client calls
-@rpc("any_peer")
-func add_existing_consumables(consumables): pass
-
 @rpc("any_peer")
 func add_existing_toy_ball(toy_ball_arr): pass

@@ -61,7 +61,7 @@ func _ready():
 func _physics_process(delta):
 	name_label.rotation = -rotation
 	speed = clamp(min_speed, -mass+max_speed+100, max_speed)
-	print('speed: %s    mass: %s' %[speed, mass])
+#	print('speed: %s    mass: %s' %[speed, mass])
 	
 	if not is_multiplayer_authority(): return
 	
@@ -136,6 +136,7 @@ func _on_pickup_area_area_entered(area:Consumable):
 #	if not is_multiplayer_authority(): return
 	if area.spitter == get_multiplayer_authority(): return
 	if is_multiplayer_authority():
+		calculate_mass_eat(area)
 		Game.request_despawn_pickup(area.name, get_multiplayer_authority())
 		$Eat.play()
 
@@ -163,8 +164,9 @@ func freeze_hamster():
 func calculate_mass_eat(consumable):
 	if consumable.is_in_group('poop'):
 		mass += mass * consumable.mass / 100
-		print_debug(consumable.mass)
-		poisoned()
+#		print_debug(consumable.mass)
+#		poisoned()
+		rpc('poisoned')
 	else:
 		mass += consumable.mass
 
@@ -190,6 +192,7 @@ func add_mass(num):
 	print('mass: ', mass)
 	print('scale: ', scale)
 	
+@rpc("call_local")
 func poisoned():
 	$Poison.play()
 	var tween = create_tween()

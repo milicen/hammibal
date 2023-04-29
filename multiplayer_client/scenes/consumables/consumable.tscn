@@ -32,6 +32,7 @@ properties/6/sync = true
 z_index = -1
 z_as_relative = false
 collision_layer = 2
+monitorable = false
 script = ExtResource("1_b4nfg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -39,12 +40,5 @@ script = ExtResource("1_b4nfg")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_867ov")
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.5
-one_shot = true
-autostart = true
-
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_iv2sv")
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

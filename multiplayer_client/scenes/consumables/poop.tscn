@@ -5,7 +5,6 @@
 
 [node name="Poop" groups=["poop"] instance=ExtResource("1_tc6vq")]
 mass = -5.0
-consumable_name = "poop"
 
 [node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("2_hn5rc")

@@ -23,13 +23,10 @@ const MAP_SIZE = Vector2(5307+MAP_POS.x,3774+MAP_POS.y)
 
 #client porject calls
 @rpc("any_peer")
-func receive_poop_attack(position, direction, size, rotation, consumable_name, requester_id): pass
+func receive_poop_attack(consumable_name, requester_id): pass
 
 @rpc("any_peer")
-func receive_spit_nut(position, direction, size, rotation, consumable_name, requester_id): pass
-
-@rpc("any_peer")
-func receive_despawn_pickup(pickup_name, requester_id): pass
+func receive_spit_nut(consumable_name, requester_id): pass
 
 @rpc("any_peer")
 func receive_hunt_hamster(hunter, prey): 	pass
@@ -42,7 +39,7 @@ func move_toy_ball(ball_name, force):
 	var ball = get_node("/root/Main/%s" % str(ball_name))
 	ball.force = force
 
-@rpc("any_peer")
+#@rpc("any_peer")
 func spawn_consumable():
 	var keys = consumables.keys()
 	var key = keys[randi() % keys.size()]
@@ -53,45 +50,39 @@ func spawn_consumable():
 	var rand_x = randf_range(MAP_POS.x, MAP_SIZE.x)
 	var rand_y = randf_range(MAP_POS.y, MAP_SIZE.y)
 	var pos = Vector2(rand_x, rand_y)
-#	consumable.global_position = pos
-#	consumable.rotation = rand_rotation
+	
 	consumable.init(-1, pos, Vector2.ZERO, rand_size, rand_rotation)
 	get_node("/root/Main").add_child(consumable, true)
 	
 	var _name: String = consumable.name
 	var mod = _name.rstrip('1234567890')
 	
-	rpc('spawn_consumable', pos, rand_size, rand_rotation, consumable.name, mod.to_snake_case())
-
 
 # server project calls
 @rpc("any_peer")
 func process_poop_attack(position, direction, requester_id): 
 	var p = poop.instantiate()
-#	p.set_multiplayer_authority(requester_id)
 	var rand_size = randf_range(0.4, 0.6)
 	var rand_rotation = randf_range(0, 2*PI)
 	p.init(requester_id, position, direction, rand_size, rand_rotation)
 	get_node("/root/Main").add_child(p, true)
-	rpc('receive_poop_attack', position, direction, rand_size, rand_rotation, p.name, requester_id)
+	rpc('receive_poop_attack', p.name, requester_id)
 
 @rpc("any_peer")
 func process_spit_nut(position, direction, requester_id):
 	var rand = randi() % 2
 	var nut = sun_seed.instantiate() if rand == 0 else pumpkin_seed.instantiate()
-#	nut.set_multiplayer_authority(requester_id)
 	var rand_size = randf_range(0.4, 0.6)
 	var rand_rotation = randf_range(0, 2*PI)
 	nut.init(requester_id, position, direction, rand_size, rand_rotation)
 	get_node('/root/Main').add_child(nut, true)
-	rpc('receive_spit_nut', position, direction, rand_size, rand_rotation, nut.name, requester_id)
+	rpc('receive_spit_nut', nut.name, requester_id)
 
 @rpc("any_peer")
 func process_despawn_pickup(pickup_name, requester_id):
 	var pickup = get_node_or_null("/root/Main/%s" % str(pickup_name))
 	if pickup:
 		pickup.call_deferred('queue_free')
-	rpc('receive_despawn_pickup', pickup_name, requester_id)
 
 
 @rpc("any_peer")
