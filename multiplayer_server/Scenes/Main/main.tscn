@@ -9,3 +9,7 @@ spawn_path = NodePath("..")
 [node name="ConsumableSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/Instances/consumable/carrot.tscn", "res://Scenes/Instances/consumable/corn_a.tscn", "res://Scenes/Instances/consumable/corn_b.tscn", "res://Scenes/Instances/consumable/fetus.tscn", "res://Scenes/Instances/consumable/lettuce.tscn", "res://Scenes/Instances/consumable/pomo_a.tscn", "res://Scenes/Instances/consumable/pomo_b.tscn", "res://Scenes/Instances/consumable/poop.tscn", "res://Scenes/Instances/consumable/pumpkin_seed.tscn", "res://Scenes/Instances/consumable/sun_seed.tscn")
 spawn_path = NodePath("..")
+
+[node name="ToyBallSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/Instances/object/toy_ball.tscn")
+spawn_path = NodePath("..")

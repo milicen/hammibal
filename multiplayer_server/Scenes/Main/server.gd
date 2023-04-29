@@ -23,7 +23,8 @@ func start_server():
 	multiplayer.peer_connected.connect(_on_PeerConnected)
 	multiplayer.peer_disconnected.connect(_on_PeerDisconnected)
 	
-	spawn_toy_balls(4)
+	await get_tree().process_frame
+	spawn_toy_balls(1)
 	
 
 func _on_PeerConnected(player_id):
@@ -43,8 +44,8 @@ func spawn_toy_balls(num_of_ball: int):
 		var rand_x = randf_range(Game.MAP_POS.x, Game.MAP_SIZE.x)
 		var rand_y = randf_range(Game.MAP_POS.y, Game.MAP_SIZE.y)
 		var pos = Vector2(rand_x, rand_y)
-		get_node("/root/Main").add_child(ball, true)
 		ball.global_position = pos
+		get_node("/root/Main").add_child(ball, true)
 
 @rpc("any_peer")
 func disconnect_from_server(peer_id):
@@ -61,21 +62,3 @@ func add_player(id, data):
 	print(p.hamster_index)
 	rpc('add_player', id, data)
 
-
-@rpc("any_peer")
-func process_existing_toy_ball(id):
-	var toy_ball_arr = get_tree().get_nodes_in_group('toy_ball')
-	var arr = []
-	for toy_ball in toy_ball_arr:
-		var data = {
-			'name': toy_ball.name,
-			'position': toy_ball.global_position,
-			'rotation': toy_ball.rotation
-		}
-		arr.append(data)
-	rpc_id(id, 'add_existing_toy_ball', arr)
-
-
-# client calls
-@rpc("any_peer")
-func add_existing_toy_ball(toy_ball_arr): pass

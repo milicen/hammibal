@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var is_moving := false
 
 func _physics_process(delta):
-	if force > Vector2.ONE * 20:
+	if force.length() > 10:
 		is_moving = true
 	else:
 		is_moving = false

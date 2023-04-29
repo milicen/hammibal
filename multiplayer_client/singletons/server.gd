@@ -51,17 +51,4 @@ func add_player(id, data):
 		p.connect('poop_count_changed', get_node("/root/Main/HUD").on_Player_poop_count_changed)
 		p.connect('nut_count_changed', get_node("/root/Main/HUD").on_Player_nut_count_changed)
 
-	
 
-func request_existing_toy_ball(id):
-	rpc_id(1, 'process_existing_toy_ball', id)
-
-
-@rpc("any_peer")
-func add_existing_toy_ball(toy_ball_arr):
-	for data in toy_ball_arr:
-		Game.instance_toy_ball(data)
-
-
-@rpc("any_peer")
-func process_existing_toy_ball(id): pass

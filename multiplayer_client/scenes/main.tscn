@@ -20,6 +20,10 @@ autostart = true
 _spawnable_scenes = PackedStringArray("res://scenes/consumables/carrot.tscn", "res://scenes/consumables/corn_a.tscn", "res://scenes/consumables/corn_b.tscn", "res://scenes/consumables/fetus.tscn", "res://scenes/consumables/lettuce.tscn", "res://scenes/consumables/pomo_a.tscn", "res://scenes/consumables/pomo_b.tscn", "res://scenes/consumables/poop.tscn", "res://scenes/consumables/pumpkin_seed.tscn", "res://scenes/consumables/sun_seed.tscn")
 spawn_path = NodePath("..")
 
+[node name="ToyBallSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/objects/toy_ball.tscn")
+spawn_path = NodePath("..")
+
 [connection signal="despawned" from="PlayerSpawner" to="." method="_on_player_spawner_despawned"]
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="PlayerOrderTimer" to="." method="_on_player_order_timer_timeout"]

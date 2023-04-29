@@ -25,13 +25,13 @@ func is_main_null():
 	return get_node_or_null("/root/Main") == null
 
 
-func instance_toy_ball(data: Dictionary):
-	var tb = toy_ball.instantiate()
-	tb.name = data.name
-	tb.global_position = data.position
-	tb.rotation = data.rotation
-	if is_main_null(): return
-	get_node_or_null("/root/Main").add_child(tb)
+#func instance_toy_ball(data: Dictionary):
+#	var tb = toy_ball.instantiate()
+#	tb.name = data.name
+#	tb.global_position = data.position
+#	tb.rotation = data.rotation
+#	if is_main_null(): return
+#	get_node_or_null("/root/Main").add_child(tb)
 
 @rpc("any_peer","call_local")
 func move_toy_ball(ball_name, force):

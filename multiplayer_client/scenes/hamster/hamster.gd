@@ -78,7 +78,7 @@ func _physics_process(delta):
 		velocity = lerp(velocity, Vector2.ZERO, 0.1)
 
 	rotation = velocity.angle()
-#	name_label.rotation = -rotation
+	
 	# if colliding with somwthing
 	if move_and_slide():
 		var coll = get_last_slide_collision()
