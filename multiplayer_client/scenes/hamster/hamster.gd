@@ -6,6 +6,7 @@ signal nut_count_changed(count)
 
 # movement vars
 var speed := 300.0
+var speed_reduction_rate := 50000
 var max_speed := 400.0
 var min_speed := 100.0
 var accel := 0.0
@@ -25,10 +26,14 @@ var controlling := true
 
 
 # mass vars
+var base_mass = 100
+var mass_reduction_rate = 8
+var mass_factor = (1-(log(base_mass-(base_mass-1))/mass_reduction_rate))
 var mass = 100
-var growth_rate = 0.2
-var shrink_rate = 0.001
-var poison_shrink_rate = 0.01
+
+#var growth_rate = 0.2
+#var shrink_rate = 0.001
+#var poison_shrink_rate = 0.01
 
 # poop & nut preload
 #var poop_scene: PackedScene = preload("res://objects/consumables/poop.tscn")
@@ -60,13 +65,18 @@ func _ready():
 
 func _physics_process(delta):
 	name_label.rotation = -rotation
-	speed = clamp(min_speed, -mass+max_speed+100, max_speed)
+#	speed = clamp(min_speed, -mass+max_speed+100, max_speed)
+	speed = clamp(min_speed, max_speed+(speed_reduction_rate/mass)-(speed_reduction_rate/base_mass), max_speed)
+
 	mass = max(mass - delta * mass/500, 100)
-	scale = Vector2.ONE * (mass/100)
-	zoom = clamp(-3, -scale.x+1+1 , 1)
+	scale = Vector2.ONE * ( (log(mass - (base_mass-1))/mass_reduction_rate) + mass_factor )
+#	scale = Vector2.ONE * (mass/100)
+	zoom = clamp(0, -scale.x+1+1 , 1)
 	camera.zoom = Vector2.ONE * lerp(camera.zoom.x + delta, zoom, 0.5) * 1.2
-#	print('speed: %s    mass: %s' %[speed, mass])
+
+	print('speed: %s    mass: %s' %[speed, mass])
 #	print(zoom)
+#	print('mass: %s   scale: %s' %[mass, scale.x])
 	
 	if not is_multiplayer_authority(): return
 	
@@ -221,7 +231,8 @@ func died():
 func tween_scale():
 	var tween = create_tween()
 #	var final_scale = Vector2.ONE * (mass ** growth_rate)
-	var final_scale = Vector2.ONE * (mass / 100)
+#	var final_scale = Vector2.ONE * (mass / 100)
+	var final_scale = Vector2.ONE * ( (log(mass-(base_mass-1))/mass_reduction_rate) + mass_factor )
 	tween.tween_property(self, "scale", final_scale, 0.5)
 
 
