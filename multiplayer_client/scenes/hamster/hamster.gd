@@ -6,7 +6,7 @@ signal nut_count_changed(count)
 
 # movement vars
 var speed := 300.0
-var max_speed := 300.0
+var max_speed := 400.0
 var min_speed := 100.0
 var accel := 0.0
 @export var max_accel := 0.18
@@ -41,6 +41,7 @@ var poison_shrink_rate = 0.01
 @onready var name_label = $Label
 @onready var sprite = $Sprite2D
 @onready var camera = $Camera2D
+var zoom = 1
 
 @onready var syncer = $MultiplayerSynchronizer
 
@@ -60,9 +61,12 @@ func _ready():
 func _physics_process(delta):
 	name_label.rotation = -rotation
 	speed = clamp(min_speed, -mass+max_speed+100, max_speed)
-	mass -= delta * mass/300
+	mass = max(mass - delta * mass/500, 100)
 	scale = Vector2.ONE * (mass/100)
-	print('speed: %s    mass: %s' %[speed, mass])
+	zoom = clamp(-3, -scale.x+1+1 , 1)
+	camera.zoom = Vector2.ONE * lerp(camera.zoom.x + delta, zoom, 0.5) * 1.2
+#	print('speed: %s    mass: %s' %[speed, mass])
+#	print(zoom)
 	
 	if not is_multiplayer_authority(): return
 	
@@ -171,6 +175,9 @@ func calculate_mass_eat(consumable):
 	else:
 		mass += consumable.mass
 
+	if mass <= 100:
+		mass = 100
+
 	if consumable.is_in_group('nut'):
 		nut_count += 1
 
@@ -179,11 +186,14 @@ func calculate_mass_eat(consumable):
 func calculate_mass_release(consumable):
 	print('mass release ', consumable.mass)
 	if consumable.is_in_group('poop'):
-		mass += mass * consumable.mass / 100
+		mass -= abs(consumable.mass) / 100
 		poop_count -= 1
 	else:
 		mass -= consumable.mass
 		nut_count -= 1
+
+	if mass <= 100:
+		mass = 100
 
 	tween_scale()
 
@@ -209,10 +219,10 @@ func died():
 	# splat blood
 
 func tween_scale():
-	var tween = create_tween().set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	var tween = create_tween()
 #	var final_scale = Vector2.ONE * (mass ** growth_rate)
 	var final_scale = Vector2.ONE * (mass / 100)
-	tween.tween_property(self, "scale", final_scale, 0.3)
+	tween.tween_property(self, "scale", final_scale, 0.5)
 
 
 func _on_timer_timeout():

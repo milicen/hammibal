@@ -18,6 +18,7 @@ var consumables = {
 	'lettuce': preload("res://Scenes/Instances/consumable/lettuce.tscn"),
 }
 
+
 const MAP_POS = Vector2(-2077,-1563)
 const MAP_SIZE = Vector2(5307+MAP_POS.x,3774+MAP_POS.y) 
 
@@ -41,9 +42,12 @@ func move_toy_ball(ball_name, force):
 
 #@rpc("any_peer")
 func spawn_consumable():
-	var keys = consumables.keys()
+	var dupe = consumables.duplicate(true)
+	dupe.erase('poop')
+	
+	var keys = dupe.keys()
 	var key = keys[randi() % keys.size()]
-	var consumable = consumables[key].instantiate()
+	var consumable = dupe[key].instantiate()
 	
 	var rand_size = randf_range(0.4, 0.6)
 	var rand_rotation = randf_range(0, 2*PI)
@@ -61,7 +65,7 @@ func spawn_consumable():
 # server project calls
 @rpc("any_peer")
 func process_poop_attack(position, direction, requester_id): 
-	var p = poop.instantiate()
+	var p = consumables['poop'].instantiate()
 	var rand_size = randf_range(0.4, 0.6)
 	var rand_rotation = randf_range(0, 2*PI)
 	p.init(requester_id, position, direction, rand_size, rand_rotation)
@@ -71,7 +75,7 @@ func process_poop_attack(position, direction, requester_id):
 @rpc("any_peer")
 func process_spit_nut(position, direction, requester_id):
 	var rand = randi() % 2
-	var nut = sun_seed.instantiate() if rand == 0 else pumpkin_seed.instantiate()
+	var nut = consumables['sun_seed'].instantiate() if rand == 0 else consumables['pumpkin_seed'].instantiate()
 	var rand_size = randf_range(0.4, 0.6)
 	var rand_rotation = randf_range(0, 2*PI)
 	nut.init(requester_id, position, direction, rand_size, rand_rotation)

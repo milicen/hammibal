@@ -32,6 +32,9 @@ properties/3/sync = true
 properties/4/path = NodePath(".:hamster_index")
 properties/4/spawn = true
 properties/4/sync = true
+properties/5/path = NodePath(".:z_index")
+properties/5/spawn = true
+properties/5/sync = true
 
 [node name="Hamster" type="CharacterBody2D"]
 collision_layer = 2
@@ -47,11 +50,10 @@ shape = SubResource("CircleShape2D_owmnh")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 enabled = false
-zoom = Vector2(0.5, 0.5)
 
 [node name="PickupArea" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
 position = Vector2(24, 0)

@@ -18,6 +18,9 @@ properties/3/sync = true
 properties/4/path = NodePath(".:hamster_index")
 properties/4/spawn = true
 properties/4/sync = true
+properties/5/path = NodePath(".:z_index")
+properties/5/spawn = true
+properties/5/sync = true
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_lm144")
