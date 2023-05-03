@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://bh0xvnycjope2"]
+
+[ext_resource type="Theme" uid="uid://b0xtrucce6h42" path="res://themes/main_theme.tres" id="1_1s1id"]
+[ext_resource type="Script" path="res://scenes/hud/leaderboard.gd" id="2_6la2o"]
+[ext_resource type="Texture2D" uid="uid://dbqkmay16ooe0" path="res://assets/ui/leaderboard_head.png" id="2_rbp1j"]
+
+[node name="Leaderboard" type="VBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_1s1id")
+theme_override_constants/separation = -7
+script = ExtResource("2_6la2o")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Header" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_rbp1j")
+
+[node name="Label" type="Label" parent="Header"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -49.5
+offset_top = 1.5
+offset_right = 49.5
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Leaderboard"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="List" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = -8
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

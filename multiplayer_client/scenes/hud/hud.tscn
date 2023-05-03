@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://duaratvb8nkpr"]
+[gd_scene load_steps=8 format=3 uid="uid://duaratvb8nkpr"]
 
 [ext_resource type="Script" path="res://scenes/hud/hud.gd" id="1_jqoye"]
 [ext_resource type="Theme" uid="uid://b0xtrucce6h42" path="res://themes/main_theme.tres" id="1_qf402"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c2dapmq0fijxb" path="res://assets/food/poop.png" id="3_ni6ow"]
 [ext_resource type="Texture2D" uid="uid://dhwo340tos2mn" path="res://assets/food/sunflower seed.png" id="4_xnuy0"]
 [ext_resource type="PackedScene" uid="uid://dldmss4maurpt" path="res://scenes/hud/team_profile_small.tscn" id="5_x1py3"]
+[ext_resource type="PackedScene" uid="uid://bh0xvnycjope2" path="res://scenes/hud/leaderboard.tscn" id="7_7c5hc"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_jqoye")
@@ -112,3 +113,20 @@ layout_mode = 2
 
 [node name="TeamProfileSmall4" parent="MarginContainer/PlayerInfo/TeamData" instance=ExtResource("5_x1py3")]
 layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -315.0
+offset_top = -38.5
+offset_bottom = 38.5
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("1_qf402")
+
+[node name="Leaderboard" parent="MarginContainer2" instance=ExtResource("7_7c5hc")]
+layout_mode = 2
+size_flags_horizontal = 8

@@ -8,6 +8,9 @@ func _ready():
 
 func _on_return_home_button_pressed():
 	AudioManager.play_btn()
-	Server.disconnect_from_server(multiplayer.get_unique_id())
-	get_tree().change_scene_to_file("res://scenes/home/home.tscn")
-	self.queue_free()
+#	Server.disconnect_from_server(multiplayer.get_unique_id())
+#	get_tree().change_scene_to_file("res://scenes/home/home.tscn")
+	get_node("/root/Home").show()
+	get_node("/root/Main").hide_hud()
+	get_node("/root/Main/%s" % str(multiplayer.get_unique_id())).queue_free()
+	self.call_deferred('queue_free')

@@ -1,6 +1,6 @@
 extends Node2D
 
-
+@export var mass: float
 @export var username: String
 @export var hamster_index: int
 

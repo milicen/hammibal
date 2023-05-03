@@ -1,37 +1,69 @@
 extends Node
 
 
-var poop_scene = preload("res://scenes/consumables/poop.tscn")
-var sun_seed_scene = preload("res://scenes/consumables/sun_seed.tscn")
-var pumpkin_seed_scene = preload("res://scenes/consumables/pumpkin_seed.tscn")
+#var poop_scene = preload("res://scenes/consumables/poop.tscn")
+#var sun_seed_scene = preload("res://scenes/consumables/sun_seed.tscn")
+#var pumpkin_seed_scene = preload("res://scenes/consumables/pumpkin_seed.tscn")
+#
+#var consumables = {
+#	'poop': preload("res://scenes/consumables/poop.tscn"),
+#	'sun_seed': preload("res://scenes/consumables/sun_seed.tscn"),
+#	'pumpkin_seed': preload("res://scenes/consumables/pumpkin_seed.tscn"),
+#	'carrot': preload("res://scenes/consumables/carrot.tscn"),
+#	'corn_a': preload("res://scenes/consumables/corn_a.tscn"),
+#	'corn_b': preload("res://scenes/consumables/corn_b.tscn"),
+#	'pomo_a': preload("res://scenes/consumables/pomo_a.tscn"),
+#	'pomo_b': preload("res://scenes/consumables/pomo_b.tscn"),
+#	'fetus': preload("res://scenes/consumables/fetus.tscn"),
+#	'lettuce': preload("res://scenes/consumables/lettuce.tscn"),
+#}
 
-var consumables = {
-	'poop': preload("res://scenes/consumables/poop.tscn"),
-	'sun_seed': preload("res://scenes/consumables/sun_seed.tscn"),
-	'pumpkin_seed': preload("res://scenes/consumables/pumpkin_seed.tscn"),
-	'carrot': preload("res://scenes/consumables/carrot.tscn"),
-	'corn_a': preload("res://scenes/consumables/corn_a.tscn"),
-	'corn_b': preload("res://scenes/consumables/corn_b.tscn"),
-	'pomo_a': preload("res://scenes/consumables/pomo_a.tscn"),
-	'pomo_b': preload("res://scenes/consumables/pomo_b.tscn"),
-	'fetus': preload("res://scenes/consumables/fetus.tscn"),
-	'lettuce': preload("res://scenes/consumables/lettuce.tscn"),
-}
+#var toy_ball = preload("res://scenes/objects/toy_ball.tscn")
 
-var toy_ball = preload("res://scenes/objects/toy_ball.tscn")
+var players := []
+#	set(value):
+#		players = value
+#		print(players)
+#		in_game_players = players.filter(\
+#			func(player):
+#				return player.in_game == true
+#		)
+
+
+
 var end_game_panel = preload("res://scenes/end_game/end_game_panel.tscn")
 
-func is_main_null():
-	return get_node_or_null("/root/Main") == null
+func get_in_game_players():
+	print(players)
+	var in_game_players = players.filter(\
+		func(player):
+			return player.in_game == true
+	)
+	return in_game_players
+
+func add_player_data(new_record):
+	players.append(new_record)
+#	in_game_players = players.filter(\
+#		func(player):
+#			return player.in_game == true
+#	)
+
+func update_player_data(id, new_record):
+	for index in players.size():
+		if players[index].id == id: 
+			players[index] = new_record
+			break
 
 
-#func instance_toy_ball(data: Dictionary):
-#	var tb = toy_ball.instantiate()
-#	tb.name = data.name
-#	tb.global_position = data.position
-#	tb.rotation = data.rotation
-#	if is_main_null(): return
-#	get_node_or_null("/root/Main").add_child(tb)
+func delete_player_data(id):
+	var index
+	for i in players.size():
+		if players[i].id != id: continue
+		index = i
+		break
+
+	players.erase(players[index])
+
 
 @rpc("any_peer","call_local")
 func move_toy_ball(ball_name, force):
@@ -76,8 +108,9 @@ func receive_hunt_hamster(hunter, prey):
 	if prey == multiplayer.get_unique_id():
 #		get_tree().quit()
 		await get_tree().create_timer(1.0).timeout
-		var panel = end_game_panel.instantiate()
-		get_node("/root").add_child(panel)
+#		var panel = end_game_panel.instantiate()
+#		get_node("/root").add_child(panel)
+		get_node('/root/EndGamePanel').show()
 		return
 
 
@@ -92,8 +125,9 @@ func receive_kill_hamster(hamster_name):
 	if str(hamster_name).to_int() == multiplayer.get_unique_id():
 #		get_tree().quit()
 		await get_tree().create_timer(1.0).timeout
-		var panel = end_game_panel.instantiate()
-		get_node("/root").add_child(panel)
+#		var panel = end_game_panel.instantiate()
+#		get_node("/root").add_child(panel)
+		get_node('/root/EndGamePanel').show()
 		return
 	
 #	hamster.queue_free()

@@ -29,7 +29,7 @@ var controlling := true
 var base_mass = 100
 var mass_reduction_rate = 8
 var mass_factor = (1-(log(base_mass-(base_mass-1))/mass_reduction_rate))
-var mass = 100
+@export var mass = 100
 
 #var growth_rate = 0.2
 #var shrink_rate = 0.001
@@ -60,7 +60,6 @@ func _ready():
 	
 	if not is_multiplayer_authority():
 		await syncer.synchronized
-		print('not user')
 		display_hamster()
 
 func _physics_process(delta):
@@ -74,7 +73,7 @@ func _physics_process(delta):
 	zoom = clamp(0, -scale.x+1+1 , 1)
 	camera.zoom = Vector2.ONE * lerp(camera.zoom.x + delta, zoom, 0.5) * 1.2
 
-	print('speed: %s    mass: %s' %[speed, mass])
+#	print('speed: %s    mass: %s' %[speed, mass])
 #	print(zoom)
 #	print('mass: %s   scale: %s' %[mass, scale.x])
 	
@@ -175,6 +174,7 @@ func freeze_hamster():
 	$PickupArea/CollisionShape2D.disabled = true
 	$PreyArea/CollisionShape2D.disabled = true
 	$Timer.stop()
+	await Queries.update_player(str(self.name).to_int(), {'in_game': false})
 
 func calculate_mass_eat(consumable):
 	if consumable.is_in_group('poop'):

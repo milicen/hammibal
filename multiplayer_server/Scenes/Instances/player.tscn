@@ -21,6 +21,9 @@ properties/4/sync = true
 properties/5/path = NodePath(".:z_index")
 properties/5/spawn = true
 properties/5/sync = true
+properties/6/path = NodePath(".:mass")
+properties/6/spawn = true
+properties/6/sync = true
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_lm144")
