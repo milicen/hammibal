@@ -22,6 +22,8 @@ var consumables = {
 const MAP_POS = Vector2(-2077,-1563)
 const MAP_SIZE = Vector2(5307+MAP_POS.x,3774+MAP_POS.y) 
 
+var players := []
+
 #client porject calls
 @rpc("any_peer")
 func receive_poop_attack(consumable_name, requester_id): pass
@@ -40,7 +42,7 @@ func move_toy_ball(ball_name, force):
 	var ball = get_node("/root/Main/%s" % str(ball_name))
 	ball.force = force
 
-#@rpc("any_peer")
+
 func spawn_consumable():
 	var dupe = consumables.duplicate(true)
 	dupe.erase('poop')
@@ -60,9 +62,49 @@ func spawn_consumable():
 	
 	var _name: String = consumable.name
 	var mod = _name.rstrip('1234567890')
-	
+
+
+
+# realtime sb functions
+@rpc("any_peer")
+func get_in_game_players(requester_id):
+	var in_game_players = players.filter(\
+		func(player):
+			return player.in_game == true
+	)
+	rpc_id(requester_id, 'receive_in_game_players', in_game_players)
+#	return in_game_players
+
+@rpc
+func receive_in_game_players(players): pass
+
+func add_player_data(new_record):
+	players.append(new_record)
+
+
+func update_player_data(id, new_record):
+	for index in players.size():
+		if players[index].id == id: 
+			players[index] = new_record
+			break
+
+
+func delete_player_data(id):
+	var index
+	for i in players.size():
+		if players[i].id != id: continue
+		index = i
+		break
+
+	players.erase(players[index])
+
+
 
 # server project calls
+@rpc("any_peer")
+func free_hamster(id):
+	get_node("/root/Main/%s" % str(id)).queue_free()
+
 @rpc("any_peer")
 func process_poop_attack(position, direction, requester_id): 
 	var p = consumables['poop'].instantiate()
@@ -94,12 +136,20 @@ func process_hunt_hamster(hunter, prey):
 	var p_hamster = get_node_or_null("/root/Main/%s" % str(prey))
 #	if p_hamster:
 #		p_hamster.call_deferred('queue_free')
+	var update_player_data = {
+		'in_game': false
+	}
+	await Queries.update_player(prey, update_player_data)
 	rpc('receive_hunt_hamster', hunter , prey)
 
 @rpc("any_peer")
 func process_kill_hamster(hamster_name):
 	var hamster = get_node("/root/Main/%s" % str(hamster_name))
 #	hamster.call_deferred('queue_free')
+	var update_player_data = {
+		'in_game': false
+	}
+	await Queries.update_player(hamster_name, update_player_data)
 	rpc('receive_kill_hamster', hamster_name)
 
 

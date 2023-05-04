@@ -13,7 +13,9 @@ var loaded = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var main = preload("res://scenes/main.tscn").instantiate()
+	var end_game_panel = preload('res://scenes/end_game/end_game_panel.tscn').instantiate()
 	get_node('/root').call_deferred('add_child', main)
+	get_node('/root').call_deferred('add_child', end_game_panel)
 #	Server.connect_to_server()
 	pass # Replace with function body.
 

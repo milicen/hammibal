@@ -174,7 +174,7 @@ func freeze_hamster():
 	$PickupArea/CollisionShape2D.disabled = true
 	$PreyArea/CollisionShape2D.disabled = true
 	$Timer.stop()
-	await Queries.update_player(str(self.name).to_int(), {'in_game': false})
+#	await Queries.update_player(str(self.name).to_int(), {'in_game': false})
 
 func calculate_mass_eat(consumable):
 	if consumable.is_in_group('poop'):

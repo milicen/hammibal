@@ -19,8 +19,10 @@ extends Node
 #}
 
 #var toy_ball = preload("res://scenes/objects/toy_ball.tscn")
+signal received_in_game_players
 
 var players := []
+var in_game_players := []
 #	set(value):
 #		players = value
 #		print(players)
@@ -33,37 +35,45 @@ var players := []
 
 var end_game_panel = preload("res://scenes/end_game/end_game_panel.tscn")
 
-func get_in_game_players():
-	print(players)
-	var in_game_players = players.filter(\
-		func(player):
-			return player.in_game == true
-	)
-	return in_game_players
+func request_in_game_players():
+	rpc_id(1, 'get_in_game_players', multiplayer.get_unique_id())
 
-func add_player_data(new_record):
-	players.append(new_record)
-#	in_game_players = players.filter(\
+@rpc("any_peer")
+func receive_in_game_players(in_game_players):
+	self.in_game_players = in_game_players
+	emit_signal('received_in_game_players')
+
+@rpc
+func get_in_game_players(requester_id): pass
+#	print(players)
+#	var in_game_players = players.filter(\
 #		func(player):
 #			return player.in_game == true
 #	)
+#	return in_game_players
+	
 
-func update_player_data(id, new_record):
-	for index in players.size():
-		if players[index].id == id: 
-			players[index] = new_record
-			break
+#func add_player_data(new_record):
+#	players.append(new_record)
+#
+#func update_player_data(id, new_record):
+#	for index in players.size():
+#		if players[index].id == id: 
+#			players[index] = new_record
+#			break
+#
+#func delete_player_data(id):
+#	var index
+#	for i in players.size():
+#		if players[i].id != id: continue
+#		index = i
+#		break
+#
+#	players.erase(players[index])
 
-
-func delete_player_data(id):
-	var index
-	for i in players.size():
-		if players[i].id != id: continue
-		index = i
-		break
-
-	players.erase(players[index])
-
+@rpc("any_peer")
+func free_hamster(id):
+	rpc_id(1, 'free_hamster', id)
 
 @rpc("any_peer","call_local")
 func move_toy_ball(ball_name, force):
@@ -110,7 +120,7 @@ func receive_hunt_hamster(hunter, prey):
 		await get_tree().create_timer(1.0).timeout
 #		var panel = end_game_panel.instantiate()
 #		get_node("/root").add_child(panel)
-		get_node('/root/EndGamePanel').show()
+		get_node('/root/EndGamePanel').show_panel()
 		return
 
 
@@ -127,7 +137,7 @@ func receive_kill_hamster(hamster_name):
 		await get_tree().create_timer(1.0).timeout
 #		var panel = end_game_panel.instantiate()
 #		get_node("/root").add_child(panel)
-		get_node('/root/EndGamePanel').show()
+		get_node('/root/EndGamePanel').show_panel()
 		return
 	
 #	hamster.queue_free()
