@@ -23,6 +23,7 @@ Spawner="*res://Scenes/Instances/object/spawner.tscn"
 Map="res://Scenes/Instances/object/map.tscn"
 Queries="*res://Scenes/Main/queries.gd"
 Supabase="*res://addons/supabase/Supabase/supabase.gd"
+Utils="*res://Scenes/Main/utils.gd"
 
 [dotnet]
 

@@ -1,10 +1,5 @@
 extends Node
 
-var poop = preload("res://Scenes/Instances/consumable/poop.tscn")
-
-var sun_seed = preload("res://Scenes/Instances/consumable/sun_seed.tscn")
-var pumpkin_seed = preload("res://Scenes/Instances/consumable/pumpkin_seed.tscn")
-
 var consumables = {
 	'poop': preload("res://Scenes/Instances/consumable/poop.tscn"),
 	'sun_seed': preload("res://Scenes/Instances/consumable/sun_seed.tscn"),
@@ -65,7 +60,7 @@ func spawn_consumable():
 
 
 
-# realtime sb functions
+# realtime sb functions `players`
 @rpc("any_peer")
 func get_in_game_players(requester_id):
 	var in_game_players = players.filter(\
@@ -81,13 +76,11 @@ func receive_in_game_players(players): pass
 func add_player_data(new_record):
 	players.append(new_record)
 
-
 func update_player_data(id, new_record):
 	for index in players.size():
 		if players[index].id == id: 
 			players[index] = new_record
 			break
-
 
 func delete_player_data(id):
 	var index
@@ -98,6 +91,31 @@ func delete_player_data(id):
 
 	players.erase(players[index])
 
+# realtime sb function `teams`
+@rpc("any_peer")
+func process_join_team(code, id):
+	var team = await Queries.get_team(code)
+	if team.size() < 1:
+		rpc_id(id, 'receive_join_team',null, false)
+	else:
+		var update_player = await Queries.update_player(id, {'team': team[0].id})
+		rpc_id(id, 'receive_join_team', team[0].code, true)
+
+@rpc
+func receive_join_team(success: bool): pass
+
+@rpc('any_peer')
+func process_create_team(id):
+	var team = await Queries.insert_new_team()
+	if team.size() < 1:
+		rpc_id(id, 'receive_create_team', null, false)
+	else:
+		var update_player = await Queries.update_player(id, {'team': team[0].id})
+		rpc_id(id, 'receive_create_team', team[0].code, true)
+
+
+@rpc
+func receive_create_team(code, success: bool): pass
 
 
 # server project calls

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://d1aliwlaaovyn"]
+[gd_scene load_steps=35 format=3 uid="uid://d1aliwlaaovyn"]
 
 [ext_resource type="Script" path="res://scenes/home/home.gd" id="1_hqcwj"]
 [ext_resource type="Theme" uid="uid://b0xtrucce6h42" path="res://themes/main_theme.tres" id="1_r5eka"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://y27wakgscxn1" path="res://assets/ui/arrow_left.png" id="4_kfwu8"]
 [ext_resource type="Texture2D" uid="uid://dqo7v14nms4i2" path="res://assets/ui/arrow_right.png" id="5_62kn0"]
 [ext_resource type="Texture2D" uid="uid://cfpjdvu8st7yg" path="res://assets/hamster_profiles/profile--winter_white.png" id="5_a5ww4"]
-[ext_resource type="Script" path="res://scenes/home/PlayerInfo.gd" id="5_jucvx"]
 [ext_resource type="Texture2D" uid="uid://bbc825w4d4her" path="res://assets/ui/panel_long.png" id="6_45bja"]
 [ext_resource type="Script" path="res://scenes/home/HamsterSelect.gd" id="6_glmx2"]
 [ext_resource type="Shader" path="res://shaders/mode_btn_shadow_shader.gdshader" id="7_i1qlx"]
@@ -20,7 +19,10 @@
 [ext_resource type="Script" path="res://scenes/home/ModeButton.gd" id="11_uyujq"]
 [ext_resource type="PackedScene" uid="uid://cv6i4v3vbng1m" path="res://scenes/home/ui/team_profile.tscn" id="13_qrt77"]
 [ext_resource type="Script" path="res://scenes/home/TeamContainer.gd" id="16_oakav"]
+[ext_resource type="Script" path="res://scenes/home/join_team_inputs.gd" id="21_11xqg"]
 [ext_resource type="Texture2D" uid="uid://ckbnu4btb3ld7" path="res://assets/ui/team_icon.png" id="21_22prt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qntp1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gy33o"]
 shader = ExtResource("7_i1qlx")
@@ -276,7 +278,6 @@ unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("3_gfky7")
 stretch_mode = 2
-script = ExtResource("5_jucvx")
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo"]
 layout_mode = 1
@@ -322,7 +323,7 @@ texture_normal = ExtResource("5_62kn0")
 layout_mode = 2
 theme_override_constants/separation = 10
 script = ExtResource("10_1y4j2")
-input = NodePath("TextInput/HBoxContainer/LineEdit")
+input = NodePath("TextInput/HBoxContainer/PlayerNameInput")
 join_btn = NodePath("JoinGameButton")
 
 [node name="TextInput" type="PanelContainer" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs"]
@@ -339,14 +340,16 @@ theme_override_font_sizes/font_size = 20
 text = "Name : "
 vertical_alignment = 1
 
-[node name="LineEdit" type="LineEdit" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer"]
+[node name="PlayerNameInput" type="LineEdit" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer"]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_uneditable_color = Color(0, 0, 0, 1)
 theme_override_colors/font_placeholder_color = Color(0.682353, 0.682353, 0.682353, 1)
 theme_override_colors/caret_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_qntp1")
 placeholder_text = "Enter your name"
 caret_blink = true
 
@@ -544,7 +547,8 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="JoinTeamPopup/PopupPanel/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 30
+theme_override_constants/separation = 20
+alignment = 1
 
 [node name="Label" type="Label" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -561,14 +565,27 @@ alignment = 1
 layout_mode = 2
 texture = ExtResource("21_22prt")
 
-[node name="Inputs" type="VBoxContainer" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("input", "join_btn", "root")]
+[node name="Inputs" type="VBoxContainer" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("input", "join_btn", "warning_label", "progress_label", "root")]
 layout_mode = 2
 theme_override_constants/separation = 10
-script = ExtResource("10_1y4j2")
-input = NodePath("TextInput/HBoxContainer/LineEdit")
+script = ExtResource("21_11xqg")
+input = NodePath("TextInput/HBoxContainer/TeamCodeInput")
 join_btn = NodePath("JoinTeamButton")
-is_popup = true
+warning_label = NodePath("WarningLabel")
+progress_label = NodePath("ProgressLabel")
 root = NodePath("../../../..")
+
+[node name="WarningLabel" type="Label" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.321569, 0.321569, 1)
+text = "* Team code doesn't exist"
+
+[node name="ProgressLabel" type="Label" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Searching for team..."
 
 [node name="TextInput" type="PanelContainer" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs"]
 layout_mode = 2
@@ -585,7 +602,7 @@ text = "Code : "
 vertical_alignment = 1
 uppercase = true
 
-[node name="LineEdit" type="LineEdit" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer"]
+[node name="TeamCodeInput" type="LineEdit" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer"]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -608,10 +625,12 @@ text = "Join team!"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect/LeftButton" to="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect" method="_on_left_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect/RightButton" to="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect" method="_on_right_button_pressed"]
 [connection signal="join_game" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs" to="." method="_on_inputs_join_game"]
-[connection signal="text_changed" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer/LineEdit" to="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs" method="_on_line_edit_text_changed"]
+[connection signal="text_changed" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer/PlayerNameInput" to="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs" method="_on_player_name_input_text_changed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs/JoinGameButton" to="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs" method="_on_join_game_button_pressed"]
 [connection signal="select_mode" from="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo" to="." method="_on_game_mode_info_select_mode"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer/Modes/SoloButton" to="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo" method="_on_solo_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer/Modes/TeamButton" to="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo" method="_on_team_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/VBoxContainer/CreateTeamButton" to="CenterContainer/VBoxContainer/TeamContainer" method="_on_create_team_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/VBoxContainer/JoinTeamButton" to="CenterContainer/VBoxContainer/TeamContainer" method="_on_join_team_button_pressed"]
-[connection signal="text_changed" from="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer/LineEdit" to="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs" method="_on_line_edit_text_changed"]
+[connection signal="text_changed" from="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer/TeamCodeInput" to="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs" method="_on_team_code_input_text_changed"]
+[connection signal="pressed" from="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs/JoinTeamButton" to="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs" method="_on_join_team_button_pressed"]

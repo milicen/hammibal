@@ -1,40 +1,47 @@
 extends Node
 
 
-#var poop_scene = preload("res://scenes/consumables/poop.tscn")
-#var sun_seed_scene = preload("res://scenes/consumables/sun_seed.tscn")
-#var pumpkin_seed_scene = preload("res://scenes/consumables/pumpkin_seed.tscn")
-#
-#var consumables = {
-#	'poop': preload("res://scenes/consumables/poop.tscn"),
-#	'sun_seed': preload("res://scenes/consumables/sun_seed.tscn"),
-#	'pumpkin_seed': preload("res://scenes/consumables/pumpkin_seed.tscn"),
-#	'carrot': preload("res://scenes/consumables/carrot.tscn"),
-#	'corn_a': preload("res://scenes/consumables/corn_a.tscn"),
-#	'corn_b': preload("res://scenes/consumables/corn_b.tscn"),
-#	'pomo_a': preload("res://scenes/consumables/pomo_a.tscn"),
-#	'pomo_b': preload("res://scenes/consumables/pomo_b.tscn"),
-#	'fetus': preload("res://scenes/consumables/fetus.tscn"),
-#	'lettuce': preload("res://scenes/consumables/lettuce.tscn"),
-#}
-
-#var toy_ball = preload("res://scenes/objects/toy_ball.tscn")
+signal create_team_completed
+signal join_team_completed
 signal received_in_game_players
+
+var join_team_status
+var create_team_status
 
 var players := []
 var in_game_players := []
-#	set(value):
-#		players = value
-#		print(players)
-#		in_game_players = players.filter(\
-#			func(player):
-#				return player.in_game == true
-#		)
-
-
 
 var end_game_panel = preload("res://scenes/end_game/end_game_panel.tscn")
 
+# team db requests
+func request_join_team(code):
+	rpc_id(1, 'process_join_team', code, multiplayer.get_unique_id())
+
+@rpc("any_peer")
+func receive_join_team(code, success: bool):
+	join_team_status = success
+	if success: 
+		PlayerData.team = code
+	emit_signal('join_team_completed')
+
+@rpc
+func process_join_team(code, id): pass
+
+func request_create_team():
+	rpc_id(1, 'process_create_team', multiplayer.get_unique_id())
+
+@rpc("any_peer")
+func receive_create_team(code, success: bool):
+	create_team_status = success
+	if success:
+		PlayerData.team = code
+	emit_signal('create_team_completed')
+	pass
+
+@rpc
+func process_create_team(id): pass
+
+# player db requests
 func request_in_game_players():
 	rpc_id(1, 'get_in_game_players', multiplayer.get_unique_id())
 
@@ -45,32 +52,10 @@ func receive_in_game_players(in_game_players):
 
 @rpc
 func get_in_game_players(requester_id): pass
-#	print(players)
-#	var in_game_players = players.filter(\
-#		func(player):
-#			return player.in_game == true
-#	)
-#	return in_game_players
-	
 
-#func add_player_data(new_record):
-#	players.append(new_record)
-#
-#func update_player_data(id, new_record):
-#	for index in players.size():
-#		if players[index].id == id: 
-#			players[index] = new_record
-#			break
-#
-#func delete_player_data(id):
-#	var index
-#	for i in players.size():
-#		if players[i].id != id: continue
-#		index = i
-#		break
-#
-#	players.erase(players[index])
 
+
+# game requests
 @rpc("any_peer")
 func free_hamster(id):
 	rpc_id(1, 'free_hamster', id)
@@ -116,10 +101,7 @@ func receive_hunt_hamster(hunter, prey):
 	p_hamster.freeze_hamster()
 	
 	if prey == multiplayer.get_unique_id():
-#		get_tree().quit()
 		await get_tree().create_timer(1.0).timeout
-#		var panel = end_game_panel.instantiate()
-#		get_node("/root").add_child(panel)
 		get_node('/root/EndGamePanel').show_panel()
 		return
 
@@ -133,14 +115,9 @@ func receive_kill_hamster(hamster_name):
 	hamster.freeze_hamster()
 	
 	if str(hamster_name).to_int() == multiplayer.get_unique_id():
-#		get_tree().quit()
 		await get_tree().create_timer(1.0).timeout
-#		var panel = end_game_panel.instantiate()
-#		get_node("/root").add_child(panel)
 		get_node('/root/EndGamePanel').show_panel()
 		return
-	
-#	hamster.queue_free()
 	
 	
 
