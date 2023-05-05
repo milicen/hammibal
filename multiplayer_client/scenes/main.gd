@@ -6,6 +6,7 @@ var players = []
 
 func show_hud():
 	$HUD.show()
+	$HUD.set_hud()
 
 func hide_hud():
 	$HUD.hide()

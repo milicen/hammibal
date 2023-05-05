@@ -1,6 +1,8 @@
 extends CanvasLayer
 
 @onready var profile = $ColorRect/EndGameInfo/MarginContainer/VBoxContainer/HamsterProfile 
+@onready var final_mass_label = $ColorRect/EndGameInfo/MarginContainer/VBoxContainer/VBoxContainer/Label
+
 
 func _ready():
 	hide()
@@ -21,5 +23,8 @@ func _on_return_home_button_pressed():
 func show_panel():
 	show()
 	profile.texture = HamsterData.hamsters[PlayerData.chosen_hamster_index].hamster_ghost
+	var player = get_node_or_null("/root/Main/%s" % str(multiplayer.get_unique_id()))
+	if !player: return
+	final_mass_label.text = 'Your final mass: %.2f' % player.mass
 
 	

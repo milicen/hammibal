@@ -38,7 +38,7 @@ func _on_timer_timeout():
 			li.set_list_data('-', '-')
 			index += 1
 		else:
-			li.set_list_data(str(player_node.username), player_node.mass)
+			li.set_list_data(str(player_node.username), '%.2f' % player_node.mass)
 	
 	
 
