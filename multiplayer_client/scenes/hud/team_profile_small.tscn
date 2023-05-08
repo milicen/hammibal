@@ -1,10 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://dldmss4maurpt"]
+[gd_scene load_steps=4 format=3 uid="uid://dldmss4maurpt"]
 
 [ext_resource type="Material" uid="uid://raa0lacmje42" path="res://shaders/team_container.tres" id="1_n1vi4"]
+[ext_resource type="Script" path="res://scenes/home/ui/team_profile.gd" id="1_ywt88"]
 [ext_resource type="Texture2D" uid="uid://cbh7qht5miy0i" path="res://assets/ui/profile_empty.png" id="2_6g3ix"]
 
-[node name="TeamProfileSmall" type="VBoxContainer"]
+[node name="TeamProfileSmall" type="VBoxContainer" node_paths=PackedStringArray("texture_rect", "label")]
 theme_override_constants/separation = 4
+script = ExtResource("1_ywt88")
+texture_rect = NodePath("TextureRect")
+label = NodePath("Label")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 material = ExtResource("1_n1vi4")

@@ -86,12 +86,15 @@ func receive_update_player_data(new_data):
 
 func add_player_data(new_record):
 	players.append(new_record)
+	send_latest_players()
 
 func update_player_data(id, new_record):
 	for index in players.size():
 		if players[index].id == id: 
 			players[index] = new_record
 			break
+	send_latest_players()
+
 
 func delete_player_data(id):
 	var index
@@ -101,6 +104,15 @@ func delete_player_data(id):
 		break
 
 	players.erase(players[index])
+	send_latest_players()
+
+
+func send_latest_players():
+	rpc('get_latest_players', players)
+
+@rpc
+func get_latest_players(players): pass
+
 
 # realtime sb function `teams`
 @rpc("any_peer")

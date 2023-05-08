@@ -8,7 +8,7 @@ signal received_in_game_players
 var join_team_status
 var create_team_status
 
-var players := []
+var team_members := []
 var in_game_players := []
 
 var end_game_panel = preload("res://scenes/end_game/end_game_panel.tscn")
@@ -67,6 +67,18 @@ func receive_update_player_data(new_data):
 @rpc
 func process_update_player_data(column, value, id): pass
 
+@rpc("any_peer")
+func get_latest_players(players: Array):
+#	self.players = players
+	if team_members.size() > 0 and PlayerData.team == null:
+		team_members.clear()
+	
+	if PlayerData.team == null: return
+	team_members = players.filter(func(p): return p.team == PlayerData.team)
+	
+	get_node("/root/Home").set_team_data()
+	get_node("/root/Main").set_team_data()
+	pass
 
 
 # game requests

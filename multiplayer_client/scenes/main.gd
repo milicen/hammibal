@@ -11,6 +11,8 @@ func show_hud():
 func hide_hud():
 	$HUD.hide()
 
+func set_team_data():
+	$HUD.set_team()
 
 func _on_player_spawner_spawned(node):
 	players.append(node)

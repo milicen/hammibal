@@ -433,7 +433,7 @@ libraries = {
 "": SubResource("AnimationLibrary_88fu6")
 }
 
-[node name="TeamContainer" type="TextureRect" parent="CenterContainer/VBoxContainer" node_paths=PackedStringArray("team_option_buttons", "team_code_info")]
+[node name="TeamContainer" type="TextureRect" parent="CenterContainer/VBoxContainer" node_paths=PackedStringArray("team_option_buttons", "team_code_info", "team_profile_container")]
 unique_name_in_owner = true
 material = ExtResource("11_gwkff")
 layout_mode = 2
@@ -442,6 +442,7 @@ stretch_mode = 2
 script = ExtResource("16_oakav")
 team_option_buttons = NodePath("MarginContainer/HSplitContainer/TeamOptionButtons")
 team_code_info = NodePath("MarginContainer/HSplitContainer/TeamCodeInfo")
+team_profile_container = NodePath("MarginContainer/HSplitContainer/TeamProfileContainer")
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer/TeamContainer"]
 layout_mode = 1

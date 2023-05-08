@@ -25,6 +25,14 @@ func set_hud():
 	else:
 		team_data.show()
 
+func set_team():
+	var profiles = team_data.get_children()
+	var offset = 0
+	for i in Game.team_members.size():
+		if Game.team_members[i].id == multiplayer.get_unique_id(): 
+			offset += 1
+			continue
+		profiles[i-offset].set_data(Game.team_members[i])
 
 func on_Player_poop_count_changed(value):
 	poop_gauge_label.text = str(value)

@@ -24,6 +24,9 @@ func _ready():
 func _process(delta):
 	pass
 
+func set_team_data():
+	team_container.set_team()
+
 
 func _on_game_mode_info_select_mode(mode):
 	if !loaded:

@@ -2,7 +2,7 @@ extends TextureRect
 
 @export var team_option_buttons: Control
 @export var team_code_info: Control
-
+@export var team_profile_container: Control
 
 func play(reversed:= false):
 	if reversed:
@@ -10,6 +10,13 @@ func play(reversed:= false):
 		hide_team_code()
 	else:
 		$AnimationPlayer.play("toggle")
+
+func set_team():
+	var profiles = team_profile_container.get_children()
+	for i in Game.team_members.size():
+		profiles[i].set_data(Game.team_members[i])
+	
+	pass
 
 
 func _on_create_team_button_pressed():
