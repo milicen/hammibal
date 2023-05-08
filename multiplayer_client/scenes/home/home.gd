@@ -41,6 +41,7 @@ func _on_inputs_join_game():
 #	PlayerData.username = input_name.text
 #	PlayerData.chosen_hamster_index = hamster_select.index
 #	get_tree().change_scene_to_file("res://scenes/main.tscn")
+	if PlayerData.username == null: return
 	self.hide()
 	var player_data = {
 		'username': PlayerData.username,

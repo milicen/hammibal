@@ -61,7 +61,7 @@ func receive_update_player_data(new_data):
 #	print('new data: ', new_data)
 	PlayerData.username = new_data.username
 	PlayerData.chosen_hamster_index = new_data.hamster_index
-#	PlayerData.team = new_data.team
+	PlayerData.team = new_data.team
 	pass
 
 @rpc

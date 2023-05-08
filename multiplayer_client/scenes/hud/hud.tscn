@@ -8,8 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://dldmss4maurpt" path="res://scenes/hud/team_profile_small.tscn" id="5_x1py3"]
 [ext_resource type="PackedScene" uid="uid://bh0xvnycjope2" path="res://scenes/hud/leaderboard.tscn" id="7_7c5hc"]
 
-[node name="HUD" type="CanvasLayer"]
+[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("team_data")]
 script = ExtResource("1_jqoye")
+team_data = NodePath("MarginContainer/PlayerInfo/TeamData")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 offset_right = 40.0

@@ -36,5 +36,7 @@ func show_team_code():
 	team_code_info.show()
 
 func hide_team_code():
+	Game.request_update_player_data('team', null, multiplayer.get_unique_id())
 	team_code_info.hide()
 	team_option_buttons.show()
+

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://d1aliwlaaovyn"]
+[gd_scene load_steps=36 format=3 uid="uid://d1aliwlaaovyn"]
 
 [ext_resource type="Script" path="res://scenes/home/home.gd" id="1_hqcwj"]
 [ext_resource type="Theme" uid="uid://b0xtrucce6h42" path="res://themes/main_theme.tres" id="1_r5eka"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bfnmkgkegmedk" path="res://assets/ui/mode_team.png" id="8_eyo4y"]
 [ext_resource type="Script" path="res://scenes/home/GameModeInfo.gd" id="8_sq2af"]
 [ext_resource type="Script" path="res://scenes/home/Inputs.gd" id="10_1y4j2"]
+[ext_resource type="Script" path="res://scenes/home/PlayerNameInput.gd" id="10_yvtvu"]
 [ext_resource type="Material" uid="uid://raa0lacmje42" path="res://shaders/team_container.tres" id="11_gwkff"]
 [ext_resource type="Script" path="res://scenes/home/ModeButton.gd" id="11_uyujq"]
 [ext_resource type="PackedScene" uid="uid://cv6i4v3vbng1m" path="res://scenes/home/ui/team_profile.tscn" id="13_qrt77"]
@@ -352,6 +353,7 @@ theme_override_font_sizes/font_size = 20
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_qntp1")
 placeholder_text = "Enter your name"
 caret_blink = true
+script = ExtResource("10_yvtvu")
 
 [node name="JoinGameButton" type="Button" parent="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs"]
 layout_mode = 2

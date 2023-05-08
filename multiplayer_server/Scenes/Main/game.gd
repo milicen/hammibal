@@ -109,7 +109,7 @@ func process_join_team(code, id):
 	if team.size() < 1:
 		rpc_id(id, 'receive_join_team',null, false)
 	else:
-		var update_player = await Queries.update_player(id, {'team': team[0].id})
+		var update_player = await Queries.update_player(id, {'team': team[0].code})
 		rpc_id(id, 'receive_join_team', team[0].code, true)
 
 @rpc
