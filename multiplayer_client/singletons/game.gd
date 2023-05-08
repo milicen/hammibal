@@ -53,6 +53,20 @@ func receive_in_game_players(in_game_players):
 @rpc
 func get_in_game_players(requester_id): pass
 
+func request_update_player_data(column, value, id):
+	rpc_id(1, 'process_update_player_data', column, value, id)
+
+@rpc("any_peer")
+func receive_update_player_data(new_data):
+#	print('new data: ', new_data)
+	PlayerData.username = new_data.username
+	PlayerData.chosen_hamster_index = new_data.hamster_index
+#	PlayerData.team = new_data.team
+	pass
+
+@rpc
+func process_update_player_data(column, value, id): pass
+
 
 
 # game requests

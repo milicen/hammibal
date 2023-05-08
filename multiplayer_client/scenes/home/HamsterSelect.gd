@@ -21,6 +21,7 @@ func _on_left_button_pressed():
 	index = (index - 1) % HamsterData.hamsters.size()
 	data = HamsterData.hamsters[index]
 	set_hamster_profile(data)
+	Game.request_update_player_data('hamster_index', index, multiplayer.get_unique_id())
 
 
 func _on_right_button_pressed():
@@ -28,6 +29,7 @@ func _on_right_button_pressed():
 	index = (index + 1) % HamsterData.hamsters.size()
 	data = HamsterData.hamsters[index]
 	set_hamster_profile(data)
+	Game.request_update_player_data('hamster_index', index, multiplayer.get_unique_id())
 
 
 func set_hamster_profile(data):

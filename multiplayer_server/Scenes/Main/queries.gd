@@ -10,6 +10,7 @@ func insert_new_player(new_player):
 func update_player(id, data):
 	var query = SupabaseQuery.new().from('players').update(data).eq('id', str(id))
 	var result = await Supabase.database.query(query).completed
+	return result.data
 #	print_debug('update res: ', result.data)
 	pass
 

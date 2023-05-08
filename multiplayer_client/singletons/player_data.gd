@@ -1,7 +1,7 @@
 extends Node
 
 
-var username: String
+var username
 var chosen_hamster_index: int
 var team
 var game_mode: String

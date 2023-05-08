@@ -131,7 +131,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/CreateTeamButton:disabled")
+tracks/1/path = NodePath("MarginContainer/HSplitContainer/TeamOptionButtons/CreateTeamButton:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -143,7 +143,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/JoinTeamButton:disabled")
+tracks/2/path = NodePath("MarginContainer/HSplitContainer/TeamOptionButtons/JoinTeamButton:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -155,7 +155,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/CreateTeamButton:mouse_filter")
+tracks/3/path = NodePath("MarginContainer/HSplitContainer/TeamOptionButtons/CreateTeamButton:mouse_filter")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -167,7 +167,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/JoinTeamButton:mouse_filter")
+tracks/4/path = NodePath("MarginContainer/HSplitContainer/TeamOptionButtons/JoinTeamButton:mouse_filter")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -195,7 +195,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/CreateTeamButton:disabled")
+tracks/1/path = NodePath("MarginContainer/HSplitContainer/TeamOptionButtons/CreateTeamButton:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -207,7 +207,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/JoinTeamButton:disabled")
+tracks/2/path = NodePath("MarginContainer/HSplitContainer/TeamOptionButtons/JoinTeamButton:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -219,7 +219,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/CreateTeamButton:mouse_filter")
+tracks/3/path = NodePath("MarginContainer/HSplitContainer/TeamOptionButtons/CreateTeamButton:mouse_filter")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -231,7 +231,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("MarginContainer/HSplitContainer/VBoxContainer/JoinTeamButton:mouse_filter")
+tracks/4/path = NodePath("MarginContainer/HSplitContainer/TeamOptionButtons/JoinTeamButton:mouse_filter")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -431,13 +431,15 @@ libraries = {
 "": SubResource("AnimationLibrary_88fu6")
 }
 
-[node name="TeamContainer" type="TextureRect" parent="CenterContainer/VBoxContainer"]
+[node name="TeamContainer" type="TextureRect" parent="CenterContainer/VBoxContainer" node_paths=PackedStringArray("team_option_buttons", "team_code_info")]
 unique_name_in_owner = true
 material = ExtResource("11_gwkff")
 layout_mode = 2
 texture = ExtResource("6_45bja")
 stretch_mode = 2
 script = ExtResource("16_oakav")
+team_option_buttons = NodePath("MarginContainer/HSplitContainer/TeamOptionButtons")
+team_code_info = NodePath("MarginContainer/HSplitContainer/TeamCodeInfo")
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer/TeamContainer"]
 layout_mode = 1
@@ -472,11 +474,11 @@ layout_mode = 2
 [node name="TeamProfile5" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamProfileContainer" instance=ExtResource("13_qrt77")]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer"]
+[node name="TeamOptionButtons" type="VBoxContainer" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamOptionButtons"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
@@ -484,7 +486,7 @@ text = "Team"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CreateTeamButton" type="Button" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/VBoxContainer"]
+[node name="CreateTeamButton" type="Button" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamOptionButtons"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -493,7 +495,7 @@ theme_override_font_sizes/font_size = 20
 disabled = true
 text = "Create"
 
-[node name="JoinTeamButton" type="Button" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/VBoxContainer"]
+[node name="JoinTeamButton" type="Button" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamOptionButtons"]
 layout_mode = 2
 mouse_filter = 2
 theme_type_variation = &"ButtonBlue"
@@ -502,6 +504,29 @@ theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
 disabled = true
 text = "Join"
+
+[node name="TeamCodeInfo" type="VBoxContainer" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamCodeInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "CODE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamCodeInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "Share this code to invite your friends"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer/VBoxContainer/TeamContainer"]
 libraries = {
@@ -565,7 +590,7 @@ alignment = 1
 layout_mode = 2
 texture = ExtResource("21_22prt")
 
-[node name="Inputs" type="VBoxContainer" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("input", "join_btn", "warning_label", "progress_label", "root")]
+[node name="Inputs" type="VBoxContainer" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("input", "join_btn", "warning_label", "progress_label", "root", "team_container")]
 layout_mode = 2
 theme_override_constants/separation = 10
 script = ExtResource("21_11xqg")
@@ -574,6 +599,7 @@ join_btn = NodePath("JoinTeamButton")
 warning_label = NodePath("WarningLabel")
 progress_label = NodePath("ProgressLabel")
 root = NodePath("../../../..")
+team_container = NodePath("../../../../../CenterContainer/VBoxContainer/TeamContainer")
 
 [node name="WarningLabel" type="Label" parent="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs"]
 visible = false
@@ -625,12 +651,13 @@ text = "Join team!"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect/LeftButton" to="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect" method="_on_left_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect/RightButton" to="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/HamsterSelect" method="_on_right_button_pressed"]
 [connection signal="join_game" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs" to="." method="_on_inputs_join_game"]
+[connection signal="focus_exited" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer/PlayerNameInput" to="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs" method="_on_player_name_input_focus_exited"]
 [connection signal="text_changed" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer/PlayerNameInput" to="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs" method="_on_player_name_input_text_changed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs/JoinGameButton" to="CenterContainer/VBoxContainer/GameInfoContainer/PlayerInfo/MarginContainer/VBoxContainer/Inputs" method="_on_join_game_button_pressed"]
 [connection signal="select_mode" from="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo" to="." method="_on_game_mode_info_select_mode"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer/Modes/SoloButton" to="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo" method="_on_solo_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer/Modes/TeamButton" to="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo" method="_on_team_button_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/VBoxContainer/CreateTeamButton" to="CenterContainer/VBoxContainer/TeamContainer" method="_on_create_team_button_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/VBoxContainer/JoinTeamButton" to="CenterContainer/VBoxContainer/TeamContainer" method="_on_join_team_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamOptionButtons/CreateTeamButton" to="CenterContainer/VBoxContainer/TeamContainer" method="_on_create_team_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamOptionButtons/JoinTeamButton" to="CenterContainer/VBoxContainer/TeamContainer" method="_on_join_team_button_pressed"]
 [connection signal="text_changed" from="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer/TeamCodeInput" to="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs" method="_on_team_code_input_text_changed"]
 [connection signal="pressed" from="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs/JoinTeamButton" to="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs" method="_on_join_team_button_pressed"]

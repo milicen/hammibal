@@ -29,7 +29,15 @@ func _on_player_name_input_text_changed(new_text):
 		toggle_join_btn(true)
 		return
 
+func _on_player_name_input_focus_exited():
+	print('unfocus input: ', input.text)
+	Game.request_update_player_data('username', input.text, multiplayer.get_unique_id())
+	pass # Replace with function body.
+
 
 func _on_join_game_button_pressed():
 	AudioManager.play_btn()
 	emit_signal('join_game')
+
+
+

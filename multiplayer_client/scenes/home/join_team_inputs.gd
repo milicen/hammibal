@@ -5,6 +5,7 @@ extends VBoxContainer
 @export var warning_label: Label
 @export var progress_label: Label
 @export var root: Control
+@export var team_container: Control
 
 signal join_team(team_code)
 
@@ -56,6 +57,7 @@ func _on_join_team_button_pressed():
 #		PlayerData.team = input.text
 		input.text = ''
 		# hide buttons on teams ui
+		team_container.show_team_code()
 		# show players in team
 		
 	input.editable = true

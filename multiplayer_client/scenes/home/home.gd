@@ -38,8 +38,8 @@ func _on_game_mode_info_select_mode(mode):
 
 
 func _on_inputs_join_game():
-	PlayerData.username = input_name.text
-	PlayerData.chosen_hamster_index = hamster_select.index
+#	PlayerData.username = input_name.text
+#	PlayerData.chosen_hamster_index = hamster_select.index
 #	get_tree().change_scene_to_file("res://scenes/main.tscn")
 	self.hide()
 	var player_data = {
@@ -48,6 +48,9 @@ func _on_inputs_join_game():
 	}
 	Server.rpc_id(1, 'add_player', multiplayer.get_unique_id(), player_data)
 #	Server.connect_to_server()
+
+
+
 
 
 

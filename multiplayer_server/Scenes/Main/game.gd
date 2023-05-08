@@ -73,6 +73,17 @@ func get_in_game_players(requester_id):
 @rpc
 func receive_in_game_players(players): pass
 
+@rpc("any_peer")
+func process_update_player_data(column, value, id):
+	var updated_player = await Queries.update_player(id, {column: value})
+#	print('req update player: ', updated_player)
+	rpc_id(id, 'receive_update_player_data', updated_player[0])
+	pass
+
+@rpc
+func receive_update_player_data(new_data):
+	pass
+
 func add_player_data(new_record):
 	players.append(new_record)
 
@@ -110,7 +121,7 @@ func process_create_team(id):
 	if team.size() < 1:
 		rpc_id(id, 'receive_create_team', null, false)
 	else:
-		var update_player = await Queries.update_player(id, {'team': team[0].id})
+		var update_player = await Queries.update_player(id, {'team': team[0].code})
 		rpc_id(id, 'receive_create_team', team[0].code, true)
 
 
