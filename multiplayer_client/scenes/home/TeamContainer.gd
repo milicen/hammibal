@@ -16,7 +16,11 @@ func set_team():
 	for i in Game.team_members.size():
 		profiles[i].set_data(Game.team_members[i])
 	
-	pass
+	for i in profiles.size():
+		if i < Game.team_members.size():
+			profiles[i].set_data(Game.team_members[i])
+		else:
+			profiles[i].set_data(null)
 
 
 func _on_create_team_button_pressed():
@@ -44,6 +48,9 @@ func show_team_code():
 
 func hide_team_code():
 	Game.request_update_player_data('team', null, multiplayer.get_unique_id())
+	var profiles = team_profile_container.get_children()
+	for child in profiles:
+		child.set_data(null)
 	team_code_info.hide()
 	team_option_buttons.show()
 
