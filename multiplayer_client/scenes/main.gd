@@ -26,29 +26,16 @@ func _on_player_spawner_despawned(node):
 func _on_player_order_timer_timeout():
 	# mass sort
 	var copy = players.duplicate()
-	for n in copy.size():
-		var index = 0
-		
-		for m in copy.size():
-			var current = copy[index]
-			if index+1 > copy.size()-1: break
-			var next = copy[index+1]
-			
-			if current == null or next == null: break
-		
-			if current.mass > next.mass:
-				var tmp = current
-				copy[index] = next
-				copy[index+1] = tmp
-			
-			index += 1
+	copy.sort_custom(sort_asc)
 	
-	players = copy
-	for index in players.size():
-		if players[index] == null: continue
-		players[index].z_index = index
-		
-	
+	for i in copy.size():
+		if copy[i] == null: continue
+		copy[i].z_index = i
+
+
+func sort_asc(a,b):
+	if !a or !b: return false
+	return a.mass < b.mass
 
 
 

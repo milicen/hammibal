@@ -21,24 +21,30 @@ func _on_timer_timeout():
 	Game.request_in_game_players()
 	await Game.received_in_game_players
 	var players = Game.in_game_players
-	players.sort_custom(sort)
+#	players.sort_custom(sort)
 	var sorted = players.slice(0, min(10, players.size()))
 	
 	print(players)
 	
 	var list_items = list.get_children()
 	var index = 0
-	for n in sorted.size():
-		var num = n-index
-		var li = list_items[num]
+	for n in list_items.size():
+#		var num = n-index
+#		var li = list_items[num]
+		var li = list_items[n]
 		
-		var player_node = get_node_or_null("/root/Main/%s" % str(sorted[n].id))
-#		print('player node: ', player_node)
-		if !player_node: 
-			li.set_list_data('-', '-')
-			index += 1
+		if n < sorted.size():
+			var player_node = get_node_or_null("/root/Main/%s" % str(sorted[n].id))
+	#		print('player node: ', player_node)
+			if !player_node: 
+				li.set_list_data('-', '-')
+				index += 1
+			else:
+				li.set_list_data(str(player_node.username), '%.2f' % player_node.mass)
 		else:
-			li.set_list_data(str(player_node.username), '%.2f' % player_node.mass)
+			li.set_list_data('-', '-')
+			
+		
 	
 	
 

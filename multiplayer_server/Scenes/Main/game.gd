@@ -67,8 +67,36 @@ func get_in_game_players(requester_id):
 		func(player):
 			return player.in_game == true
 	)
+	in_game_players.sort_custom(sort_simple)
 	rpc_id(requester_id, 'receive_in_game_players', in_game_players)
+	
+#	var offset = 0
+#	for i in in_game_players.size():
+#		var player_node = get_node_or_null("/root/Main/%s" % str(in_game_players[i].id))
+#		if !player_node: 
+#			offset += 1
+#			continue
+#		player_node.z_index = i-offset
+		
+		
+	
+#	var top_players = in_game_players.slice(0, min(10, in_game_players.size()))
 #	return in_game_players
+
+func sort_simple(a,b):
+	var player_a = get_node_or_null("/root/Main/%s" % str(a.id))
+	var player_b = get_node_or_null("/root/Main/%s" % str(b.id))
+	
+	
+	if !player_a or !player_b: return
+	
+	return player_a.mass > player_b.mass
+	
+#	if player_a.mass > player_b.mass:
+#		return -1
+#	if player_a.mass < player_b.mass:
+#		return 1
+
 
 @rpc
 func receive_in_game_players(players): pass

@@ -5,13 +5,11 @@ extends CharacterBody2D
 	set(value):
 		is_moving = value
 		if value:
-			print('moving')
 #			set_collision_mask_value(2, false)
 			set_collision_layer_value(3, false)
 #			$CollisionShape2D.disabled = true
 			$HamsterArea.monitoring = true
 		else:
-			print('not moving')
 #			set_collision_mask_value(2, true)
 			set_collision_layer_value(3, true)
 #			$CollisionShape2D.disabled = false
