@@ -17,7 +17,7 @@ extends CharacterBody2D
 
 
 func _on_hamster_area_body_entered(body):
-	if body.scale.x <= 0.5:
+	if body.scale.x <= 1.7:
 		$Squish.play()
 		Game.request_kill_hamster(body.name)
 	else:

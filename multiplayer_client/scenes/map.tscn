@@ -42,3 +42,15 @@ shape = SubResource("RectangleShape2D_q1n8g")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="WorldBoundaries"]
 position = Vector2(2641.5, 3902)
 shape = SubResource("RectangleShape2D_q1n8g")
+
+[node name="CanvasGroup" type="CanvasGroup" parent="."]
+show_behind_parent = true
+
+[node name="Polygon2D2" type="Polygon2D" parent="CanvasGroup"]
+clip_children = 1
+antialiased = true
+polygon = PackedVector2Array(2726, 1944, 2726, 5765, 8053, 5765, 8053, 1944)
+
+[node name="Polygon2D" type="Polygon2D" parent="CanvasGroup/Polygon2D2"]
+color = Color(1, 1, 1, 0.290196)
+polygon = PackedVector2Array(4, 54, 7, 7212, 10991, 7212, 10991, 84)
