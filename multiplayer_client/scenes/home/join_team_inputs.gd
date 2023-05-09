@@ -50,16 +50,22 @@ func _on_join_team_button_pressed():
 	progress_label.hide()
 	
 	if Game.join_team_status == false:
+		warning_label.text = Game.join_team_msg
 		warning_label.show()
 	else:
 		root.hide()
 		warning_label.hide()
-#		PlayerData.team = input.text
 		input.text = ''
-		# hide buttons on teams ui
 		team_container.show_team_code()
-		# show players in team
 		
 	input.editable = true
 	join_btn.disabled = false
 		
+
+
+func _on_join_team_popup_gui_input(event):
+	if event is InputEventMouseButton and event.pressed:
+		print('clicked')
+		root.hide()
+		warning_label.hide()
+		input.text = ''

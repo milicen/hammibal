@@ -662,5 +662,6 @@ text = "Join team!"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo/MarginContainer/VBoxContainer/Modes/TeamButton" to="CenterContainer/VBoxContainer/GameInfoContainer/GameModeInfo" method="_on_team_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamOptionButtons/CreateTeamButton" to="CenterContainer/VBoxContainer/TeamContainer" method="_on_create_team_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/TeamContainer/MarginContainer/HSplitContainer/TeamOptionButtons/JoinTeamButton" to="CenterContainer/VBoxContainer/TeamContainer" method="_on_join_team_button_pressed"]
+[connection signal="gui_input" from="JoinTeamPopup" to="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs" method="_on_join_team_popup_gui_input"]
 [connection signal="text_changed" from="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs/TextInput/HBoxContainer/TeamCodeInput" to="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs" method="_on_team_code_input_text_changed"]
 [connection signal="pressed" from="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs/JoinTeamButton" to="JoinTeamPopup/PopupPanel/MarginContainer/VBoxContainer/Inputs" method="_on_join_team_button_pressed"]

@@ -6,6 +6,7 @@ signal join_team_completed
 signal received_in_game_players
 
 var join_team_status
+var join_team_msg
 var create_team_status
 
 var team_members := []
@@ -18,8 +19,9 @@ func request_join_team(code):
 	rpc_id(1, 'process_join_team', code, multiplayer.get_unique_id())
 
 @rpc("any_peer")
-func receive_join_team(code, success: bool):
+func receive_join_team(code, success: bool, message: String):
 	join_team_status = success
+	join_team_msg = message
 	if success: 
 		PlayerData.team = code
 	emit_signal('join_team_completed')

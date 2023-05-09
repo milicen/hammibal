@@ -119,10 +119,14 @@ func get_latest_players(players): pass
 func process_join_team(code, id):
 	var team = await Queries.get_team(code)
 	if team.size() < 1:
-		rpc_id(id, 'receive_join_team',null, false)
+		rpc_id(id, 'receive_join_team',null, false, 'Team not found')
 	else:
-		var update_player = await Queries.update_player(id, {'team': team[0].code})
-		rpc_id(id, 'receive_join_team', team[0].code, true)
+		var players_in_team = players.filter(func(player): return player.team == team[0].code)
+		if players_in_team.size() >= 5:
+			rpc_id(id, 'receive_join_team', null, false, 'Team is full')
+		else:
+			var update_player = await Queries.update_player(id, {'team': team[0].code})
+			rpc_id(id, 'receive_join_team', team[0].code, true, 'Successfully joined team')
 
 @rpc
 func receive_join_team(success: bool): pass
