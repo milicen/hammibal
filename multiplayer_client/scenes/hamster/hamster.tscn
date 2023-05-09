@@ -14,7 +14,7 @@
 radius = 67.0075
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p7tli"]
-radius = 28.0
+radius = 48.3735
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_xysxv"]
 properties/0/path = NodePath(".:position")
@@ -59,7 +59,6 @@ collision_layer = 0
 collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
-position = Vector2(24, 0)
 shape = SubResource("CircleShape2D_p7tli")
 
 [node name="PreyArea" type="Area2D" parent="."]
@@ -67,7 +66,6 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PreyArea"]
-position = Vector2(24, 0)
 shape = SubResource("CircleShape2D_p7tli")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -85,14 +83,15 @@ offset_right = 32.0
 offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(20, 12)
+pivot_offset = Vector2(32, 12)
 theme = ExtResource("3_em5rp")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
-text = "hello"
+text = "helloasdfasdf"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 1
+text_overrun_behavior = 3
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 10.0

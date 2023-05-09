@@ -150,9 +150,11 @@ func _on_pickup_area_area_entered(area:Consumable):
 #	if not is_multiplayer_authority(): return
 	if area.spitter == get_multiplayer_authority(): return
 	if is_multiplayer_authority():
-		calculate_mass_eat(area)
-		Game.request_despawn_pickup(area.name, get_multiplayer_authority())
-		$Eat.play()
+		if get_angle_to(area.global_position) <= deg_to_rad(90) and \
+			get_angle_to(area.global_position) >= deg_to_rad(-90):
+			calculate_mass_eat(area)
+			Game.request_despawn_pickup(area.name, get_multiplayer_authority())
+			$Eat.play()
 
 
 func _on_prey_area_body_entered(body: Hamster):
