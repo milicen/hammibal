@@ -15,10 +15,13 @@ const TRESHOLD = 50.0
 var controlling := true
 
 # ability vars
+var max_poop = 10
 @export var poop_count := 0:
 	set(value):
 		poop_count = value
 		emit_signal('poop_count_changed', poop_count)
+
+var max_nut = 30
 @export var nut_count := 0:
 	set(value):
 		nut_count = value
@@ -190,7 +193,7 @@ func calculate_mass_eat(consumable):
 	if mass <= 100:
 		mass = 100
 
-	if consumable.is_in_group('nut'):
+	if consumable.is_in_group('nut') and nut_count < max_nut:
 		nut_count += 1
 
 	tween_scale()
@@ -239,4 +242,5 @@ func tween_scale():
 
 
 func _on_timer_timeout():
+	if poop_count >= max_poop: return
 	poop_count += 1
