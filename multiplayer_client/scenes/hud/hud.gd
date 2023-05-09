@@ -6,6 +6,7 @@ extends CanvasLayer
 @onready var nut_gauge_label = $MarginContainer/PlayerInfo/PlayerData/Gauges/NutGauge/PanelContainer/Label
 
 @export var team_data: Control
+@export var team_code: Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,8 +23,11 @@ func set_hud():
 	nut_gauge_label.text = str(0)
 	if PlayerData.team == null:
 		team_data.hide()
+		team_code.hide()
 	else:
 		team_data.show()
+		team_code.show()
+		team_code.get_child(1).text = PlayerData.team
 
 func set_team():
 	var profiles = team_data.get_children()
