@@ -9,22 +9,22 @@ size = Vector2(136, 3821)
 size = Vector2(5603, 180.5)
 
 [node name="Map" type="TextureRect"]
+self_modulate = Color(1, 1, 1, 0.211765)
 z_index = -10
 z_as_relative = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -2077.0
-offset_top = -1563.0
-offset_right = 2078.0
-offset_bottom = 1563.0
+offset_left = -4823.0
+offset_top = -3516.0
+offset_right = 4537.0
+offset_bottom = 3140.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_7wl8f")
-expand_mode = 1
-stretch_mode = 1
 
 [node name="WorldBoundaries" type="StaticBody2D" parent="."]
+position = Vector2(2746, 1953)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundaries"]
