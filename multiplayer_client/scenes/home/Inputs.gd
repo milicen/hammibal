@@ -30,12 +30,14 @@ func _on_player_name_input_text_changed(new_text):
 		return
 
 func _on_player_name_input_focus_exited():
-	print('unfocus input: ', input.text)
+	if join_btn.is_hovered(): return
 	Game.request_update_player_data('username', input.text, multiplayer.get_unique_id())
 	pass # Replace with function body.
 
 
 func _on_join_game_button_pressed():
+	Game.request_update_player_data('username', input.text, multiplayer.get_unique_id())
+	await Game.update_player_finished
 	AudioManager.play_btn()
 	emit_signal('join_game')
 

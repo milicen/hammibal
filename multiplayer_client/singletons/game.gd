@@ -4,6 +4,7 @@ extends Node
 signal create_team_completed
 signal join_team_completed
 signal received_in_game_players
+signal update_player_finished
 
 var join_team_status
 var join_team_msg
@@ -64,6 +65,7 @@ func receive_update_player_data(new_data):
 	PlayerData.username = new_data.username
 	PlayerData.chosen_hamster_index = new_data.hamster_index
 	PlayerData.team = new_data.team
+	emit_signal('update_player_finished')
 	pass
 
 @rpc
