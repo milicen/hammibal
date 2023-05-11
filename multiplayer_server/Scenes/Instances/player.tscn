@@ -25,7 +25,7 @@ properties/6/path = NodePath(".:mass")
 properties/6/spawn = true
 properties/6/sync = true
 
-[node name="Player" type="Node2D"]
+[node name="Player" type="Node2D" groups=["player"]]
 script = ExtResource("1_lm144")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

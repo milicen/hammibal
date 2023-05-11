@@ -97,7 +97,9 @@ func add_player(id, data):
 	p.name = str(id)
 	p.username = data.username
 	p.hamster_index = data.hamster_index
+	Game.set_player_pos(p)
 	get_node("/root/Main").add_child(p)
+	print_debug('server pos: ', p.global_position)
 #	print(p.username)
 #	print(p.hamster_index)
 	rpc('add_player', id, data)

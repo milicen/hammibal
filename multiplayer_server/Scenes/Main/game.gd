@@ -16,6 +16,7 @@ var consumables = {
 
 const MAP_POS = Vector2(-2077,-1563)
 const MAP_SIZE = Vector2(5307+MAP_POS.x,3774+MAP_POS.y) 
+const PLAYER_BASE_SIZE = 70.0
 
 var players := []
 
@@ -70,18 +71,6 @@ func get_in_game_players(requester_id):
 	in_game_players.sort_custom(sort_simple)
 	rpc_id(requester_id, 'receive_in_game_players', in_game_players)
 	
-#	var offset = 0
-#	for i in in_game_players.size():
-#		var player_node = get_node_or_null("/root/Main/%s" % str(in_game_players[i].id))
-#		if !player_node: 
-#			offset += 1
-#			continue
-#		player_node.z_index = i-offset
-		
-		
-	
-#	var top_players = in_game_players.slice(0, min(10, in_game_players.size()))
-#	return in_game_players
 
 func sort_simple(a,b):
 	var player_a = get_node_or_null("/root/Main/%s" % str(a.id))
@@ -91,11 +80,6 @@ func sort_simple(a,b):
 	if !player_a or !player_b: return
 	
 	return player_a.mass > player_b.mass
-	
-#	if player_a.mass > player_b.mass:
-#		return -1
-#	if player_a.mass < player_b.mass:
-#		return 1
 
 
 @rpc
@@ -174,6 +158,18 @@ func receive_create_team(code, success: bool): pass
 
 
 # server project calls
+func set_player_pos(player_node):
+#	if player_node == null: return
+#	var player_nodes = get_tree().get_nodes_in_group('player')
+	
+	var rand_x = randf_range(MAP_POS.x + 200, MAP_SIZE.x - 200)
+	var rand_y = randf_range(MAP_POS.y + 200, MAP_SIZE.y - 200)
+	var pos = Vector2(rand_x, rand_y)
+	
+	player_node.global_position = pos
+	print_debug('gen pos: ', pos)
+	
+
 @rpc("any_peer")
 func free_hamster(id):
 	get_node("/root/Main/%s" % str(id)).queue_free()
