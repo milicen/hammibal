@@ -61,9 +61,9 @@ func _enter_tree():
 func _ready():
 	camera.enabled = is_multiplayer_authority()
 	
-	if not is_multiplayer_authority():
-		await syncer.synchronized
-		display_hamster()
+#	if not is_multiplayer_authority():
+#	await syncer.synchronized
+	display_hamster()
 
 func _physics_process(delta):
 	name_label.rotation = -rotation
@@ -73,7 +73,7 @@ func _physics_process(delta):
 	mass = max(mass - delta * mass/500, 100)
 	scale = Vector2.ONE * ( (log(mass - (base_mass-1))/mass_reduction_rate) + mass_factor )
 #	scale = Vector2.ONE * (mass/100)
-	zoom = clamp(0, -scale.x+1+1 , 1)
+	zoom = clamp(0.7, -scale.x+1+1 , 1)
 	camera.zoom = Vector2.ONE * lerp(camera.zoom.x + delta, zoom, 0.5) * 1.2
 
 #	print('speed: %s    mass: %s' %[speed, mass])
@@ -131,6 +131,10 @@ func _notification(what):
 			controlling = true
 		NOTIFICATION_WM_MOUSE_EXIT:
 			controlling = false
+
+@rpc("any_peer")
+func set_start_pos(pos):
+	global_position = pos
 
 
 func set_hamster(username, hamster_index):

@@ -158,16 +158,16 @@ func receive_create_team(code, success: bool): pass
 
 
 # server project calls
-func set_player_pos(player_node):
+func get_player_pos():
 #	if player_node == null: return
 #	var player_nodes = get_tree().get_nodes_in_group('player')
 	
 	var rand_x = randf_range(MAP_POS.x + 200, MAP_SIZE.x - 200)
 	var rand_y = randf_range(MAP_POS.y + 200, MAP_SIZE.y - 200)
 	var pos = Vector2(rand_x, rand_y)
-	
-	player_node.global_position = pos
 	print_debug('gen pos: ', pos)
+	
+	return pos
 	
 
 @rpc("any_peer")

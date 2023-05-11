@@ -19,8 +19,8 @@ func _on_player_spawner_spawned(node):
 
 
 func _on_player_spawner_despawned(node):
-	var player = players.find(node)
-	players.erase(player)
+	var index = players.find(node)
+	players.remove_at(index)
 
 
 func _on_player_order_timer_timeout():

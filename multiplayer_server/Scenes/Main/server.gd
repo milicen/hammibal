@@ -41,6 +41,7 @@ func on_sb_channel_update(old_record: Dictionary, new_record: Dictionary, channe
 
 	# delete operation
 	if !old_record.is_empty() and new_record.is_empty():
+		print('delete id: ', old_record.id)
 		Game.delete_player_data(old_record.id)
 		pass
 
@@ -97,9 +98,8 @@ func add_player(id, data):
 	p.name = str(id)
 	p.username = data.username
 	p.hamster_index = data.hamster_index
-	Game.set_player_pos(p)
+#	Game.set_player_pos(p)
 	get_node("/root/Main").add_child(p)
-	print_debug('server pos: ', p.global_position)
 #	print(p.username)
 #	print(p.hamster_index)
 	rpc('add_player', id, data)
