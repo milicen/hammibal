@@ -23,6 +23,7 @@ properties/3/spawn = true
 properties/3/sync = true
 
 [node name="ToyBall" type="CharacterBody2D" groups=["toy_ball"]]
+top_level = true
 z_index = 1
 z_as_relative = false
 collision_layer = 4
