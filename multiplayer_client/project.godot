@@ -23,8 +23,6 @@ Map="res://scenes/map.tscn"
 HamsterData="*res://singletons/hamster_data.gd"
 PlayerData="*res://singletons/player_data.gd"
 AudioManager="*res://singletons/audio_manager.tscn"
-Supabase="*res://addons/supabase/Supabase/supabase.gd"
-Queries="*res://singletons/queries.gd"
 
 [display]
 
