@@ -88,7 +88,8 @@ func receive_in_game_players(players): pass
 @rpc("any_peer")
 func process_update_player_data(column, value, id):
 	var updated_player = await Queries.update_player(id, {column: value})
-#	print('req update player: ', updated_player)
+	print('req update player: ', updated_player)
+	if updated_player.size() < 1: return
 	rpc_id(id, 'receive_update_player_data', updated_player[0])
 	pass
 
@@ -101,6 +102,7 @@ func add_player_data(new_record):
 	send_latest_players()
 
 func update_player_data(id, new_record):
+	print_debug('update player %s = ' % str(id), new_record)
 	for index in players.size():
 		if players[index].id == id: 
 			players[index] = new_record
@@ -115,7 +117,9 @@ func delete_player_data(id):
 		index = i
 		break
 
-	players.erase(players[index])
+#	players.erase(players[index])
+	if index == null: return
+	players.remove_at(index)
 	send_latest_players()
 
 

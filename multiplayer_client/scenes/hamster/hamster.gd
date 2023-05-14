@@ -171,8 +171,8 @@ func _on_prey_area_body_entered(body: Hamster):
 	
 	if body.mass < self.mass:
 		Game.request_hunt_hamster(str(self.name).to_int(), str(body.name).to_int())
-	else:
-		Game.request_hunt_hamster(str(body.name).to_int(), str(self.name).to_int())
+#	else:
+#		Game.request_hunt_hamster(str(body.name).to_int(), str(self.name).to_int())
 
 func freeze_hamster():
 	died()

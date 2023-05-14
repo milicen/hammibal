@@ -29,6 +29,10 @@ Utils="*res://Scenes/Main/utils.gd"
 
 project/assembly_name="multiplayer_server"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/supabase/plugin.cfg")
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
