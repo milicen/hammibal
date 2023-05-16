@@ -67,12 +67,12 @@ func _ready():
 
 func _physics_process(delta):
 	name_label.rotation = -rotation
-#	speed = clamp(min_speed, -mass+max_speed+100, max_speed)
-	speed = clamp(min_speed, max_speed+(speed_reduction_rate/mass)-(speed_reduction_rate/base_mass), max_speed)
+	speed = clamp(min_speed, -mass+max_speed+100, max_speed)
+#	speed = clamp(min_speed, max_speed+(speed_reduction_rate/mass)-(speed_reduction_rate/base_mass), max_speed)
 
 	mass = max(mass - delta * mass/500, 100)
-	scale = Vector2.ONE * ( (log(mass - (base_mass-1))/mass_reduction_rate) + mass_factor )
-#	scale = Vector2.ONE * (mass/100)
+#	scale = Vector2.ONE * ( (log(mass - (base_mass-1))/mass_reduction_rate) + mass_factor )
+	scale = Vector2.ONE * (mass/100)
 	zoom = clamp(0.7, -scale.x+1+1 , 1)
 	camera.zoom = Vector2.ONE * lerp(camera.zoom.x + delta, zoom, 0.5) * 1.2
 
@@ -240,9 +240,9 @@ func died():
 func tween_scale():
 	var tween = create_tween()
 #	var final_scale = Vector2.ONE * (mass ** growth_rate)
-#	var final_scale = Vector2.ONE * (mass / 100)
-	var final_scale = Vector2.ONE * ( (log(mass-(base_mass-1))/mass_reduction_rate) + mass_factor )
-	tween.tween_property(self, "scale", final_scale, 0.5)
+	var final_scale = Vector2.ONE * (mass / 100)
+#	var final_scale = Vector2.ONE * ( (log(mass-(base_mass-1))/mass_reduction_rate) + mass_factor )
+	tween.tween_property(self, "scale", final_scale, 1.0)
 
 
 func _on_timer_timeout():

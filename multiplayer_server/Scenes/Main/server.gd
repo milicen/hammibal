@@ -12,6 +12,7 @@ var max_players = 100
 @onready var toy_ball = preload("res://Scenes/Instances/object/toy_ball.tscn")
 
 #var players = {}
+var sb_client: RealtimeClient
 
 func _ready():
 	connect_to_realtime_sb()
@@ -19,7 +20,17 @@ func _ready():
 
 func connect_to_realtime_sb():
 	await Supabase.ready
-	var sb_client = Supabase.realtime.client()
+	sb_client = Supabase.realtime.client()
+	sb_client.connect('disconnected', func(): create_realtime_connection())
+	create_realtime_connection()
+#	sb_client.connect_client()
+#	await sb_client.connected
+#	var channel = sb_client\
+#					.channel('public', 'players')\
+#					.on('all', on_sb_channel_update)\
+#					.subscribe()
+
+func create_realtime_connection():
 	sb_client.connect_client()
 	await sb_client.connected
 	var channel = sb_client\
@@ -28,7 +39,7 @@ func connect_to_realtime_sb():
 					.subscribe()
 
 func on_sb_channel_update(old_record: Dictionary, new_record: Dictionary, channel):
-	print('realtime update')
+#	print('realtime update')
 	# insert operation
 	if old_record.is_empty() and !new_record.is_empty():
 		Game.add_player_data(new_record)
@@ -54,7 +65,7 @@ func start_server():
 	multiplayer.peer_disconnected.connect(_on_PeerDisconnected)
 	
 	await get_tree().process_frame
-	spawn_toy_balls(1)
+	spawn_toy_balls(4)
 	
 
 func _on_PeerConnected(player_id):
@@ -72,8 +83,7 @@ func _on_PeerDisconnected(player_id):
 		get_node('/root/Main/%s' % str(player_id)).queue_free()
 	
 	await Queries.delete_player(player_id)
-	
-	pass
+
 
 func spawn_toy_balls(num_of_ball: int):
 	for n in num_of_ball:

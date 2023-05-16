@@ -61,6 +61,7 @@ func connect_client() -> int:
 	if err != OK:
 		return err
 	last_state = _ws_client.get_ready_state()
+	print('realtime opened')
 	return OK
 
 func disconnect_client(code : int = 1000, reason : String = "") -> void:
@@ -153,7 +154,7 @@ func _process(_delta : float) -> void:
 			_heartbeat_timer.start()
 			connected.emit()
 		elif state == _ws_client.STATE_CLOSED:
-			print('realtime closed')
+			print('realtime closed: %i %s' % [_ws_client.get_close_code(), _ws_client.get_close_reason()])
 			channels = []
 			_heartbeat_timer.stop()
 			disconnected.emit()

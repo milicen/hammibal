@@ -88,7 +88,7 @@ func receive_in_game_players(players): pass
 @rpc("any_peer")
 func process_update_player_data(column, value, id):
 	var updated_player = await Queries.update_player(id, {column: value})
-	print('req update player: ', updated_player)
+#	print('req update player: ', updated_player)
 	if updated_player.size() < 1: return
 	rpc_id(id, 'receive_update_player_data', updated_player[0])
 	pass
@@ -102,7 +102,7 @@ func add_player_data(new_record):
 	send_latest_players()
 
 func update_player_data(id, new_record):
-	print_debug('update player %s = ' % str(id), new_record)
+#	print_debug('update player %s = ' % str(id), new_record)
 	for index in players.size():
 		if players[index].id == id: 
 			players[index] = new_record
@@ -169,7 +169,7 @@ func get_player_pos():
 	var rand_x = randf_range(MAP_POS.x + 200, MAP_SIZE.x - 200)
 	var rand_y = randf_range(MAP_POS.y + 200, MAP_SIZE.y - 200)
 	var pos = Vector2(rand_x, rand_y)
-	print_debug('gen pos: ', pos)
+#	print_debug('gen pos: ', pos)
 	
 	return pos
 	

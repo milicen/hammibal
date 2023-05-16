@@ -30,10 +30,16 @@ func set_hud():
 		team_code.get_child(1).text = PlayerData.team
 
 func set_team():
+	var members = Game.team_members.duplicate(true).filter(func(mem): return mem.id != multiplayer.get_unique_id())
 	var profiles = team_data.get_children()
+	var offset = 0
 	for i in profiles.size():
-		if i < Game.team_members.size():
-			profiles[i].set_data(Game.team_members[i])
+		var index = i + offset
+		if index < members.size():
+			if members[index].id == multiplayer.get_unique_id():
+				offset += 1
+				continue
+			profiles[i].set_data(members[index])
 		else:
 			profiles[i].set_data(null)
 
