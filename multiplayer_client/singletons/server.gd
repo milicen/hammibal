@@ -2,13 +2,16 @@ extends Node
 
 var network = ENetMultiplayerPeer.new()
 var port = 9898
-var host = 'localhost'
+#var host = 'localhost'
+var host = 'masakmasak.duckdns.org'
+#var host = '194.233.92.72'
 #var host = '192.168.63.146'
 
 var player = preload("res://scenes/hamster/hamster.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print(host)
 #	await Supabase.ready
 #	var sb_client = Supabase.realtime.client()
 #	sb_client.connect_client()
